@@ -1,0 +1,2710 @@
+- rotate nxn matrix in spiral order
+- expression valid ({[]})
+- count region of 1 
+int a[][] = {
+                {1, 1, 0, 0, 1},
+                {1, 0, 0, 1, 0},
+                {0, 0, 1, 0, 0},
+                {0, 0, 0, 0, 1},
+                {0, 0, 0, 0, 1}
+        };
+output : 3 , count region of 1 
+- generic queue using stack
+-cannibals and missionaries problem  
+-water jug problem 
+-delete duplicate rows from a table which does not have primary key or any unique value in any column 
+-exception handling in PL SQL 
+-The 8-puzzle  
+- solve sudoku
+snake rem
+ATM
+- program add/ subtract date without using java api
+- 8 queens problem
+- print heiarchy of ur organization from ceo to your position
+- 8 stone are there in that 7 are same size and 1 is smaller , Identify this in minimum iteration
+- binary to decimal conversion and vise versa
+- http://howtodoinjava.com/2014/04/18/real-java-interview-questions-asked-for-oracle-enterprise-manager-project/
+- why u want to join oracle
+- if you join what benifite oracle can find from you
+- why you want to leave other organization
+
+- matrix manupulation, sorting in differrent ways  rem
+- queue, stack, link list implementation rem
+- primary key foreign key composite key expain with practical example rem
+- get past 6 months records from the data base make query ( mainly date conversation) rem
+- swap the number without using 3rd temp variable 
+-hotel management process design rem
+-library management process design rem
+-jdbc
+-BFS
+-Longest SubString
+- removeDuplicates from array
+-StackSort
+
+solution
+****************************************************************************************************************************************
+ count region of 1 
+int a[][] = {
+                {1, 1, 0, 0, 1},
+                {1, 0, 0, 1, 0},
+                {0, 0, 1, 0, 0},
+                {0, 0, 0, 0, 1},
+                {0, 0, 0, 0, 1}
+        };
+output : 3 , count region of 1 
+
+package practice;
+
+/**
+ * Created by EZDI\haresh.p on 14/8/17.
+ */
+public class Matrix {
+
+    public static void main(String[] args) {
+        int a[][] = {
+                {1, 1, 0, 0, 1},
+                {1, 0, 0, 1, 0},
+                {0, 0, 1, 0, 0},
+                {0, 0, 0, 0, 1},
+                {0, 0, 0, 0, 1}
+        };
+        int cp[][] = {
+                {-1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1},
+                {-1, -1, -1, -1, -1}
+        };
+        int count = 0;
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a.length; j++) {
+                System.out.print(cp[i][j] + " ");
+            }
+            System.out.println();
+        }
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a.length; j++) {
+                if (a[i][j] == 1 && cp[i][j] != 0) {
+                    count++;
+                    cp[i][j] = 0;
+                    getNearCount(a, i, j , cp);
+                    for (int k = 0; k < a.length; k++) {
+                        for (int l = 0; l < a.length; l++) {
+                            System.out.print(cp[k][l] + " ");
+                        }
+                        System.out.println();
+                    }
+                }
+            }
+        }
+        System.out.println(count);
+    }
+
+    private static int getNearCount(int[][] a, int i, int j, int[][] cp) {
+        int result = 0;
+        for (int k = j; k < a.length; k++) {
+            if (a[i][k] == 1 ) {
+                if (cp[i][k] != 0) {
+                    result = 1;
+                    cp[i][k] = 0;
+                }
+
+            } else {
+                break;
+            }
+        }
+
+        for (int k = i; k < a.length; k++) {
+            if (a[k][j] == 1 ) {
+                if (cp[k][j] != 0) {
+                    result = 1;
+                    cp[k][j] = 0;
+                }
+
+            } else {
+                break;
+            }
+        }
+        for (int k = i + 1, p = j-1; k < a.length && p > 0; k++,p--) {
+            if (p>0 && a[k][p] == 1 ) {
+                if(cp[k][p] != 0){
+                    result = 1;
+                    cp[k][p] = 0;
+                }
+
+            } else {
+                break;
+            }
+        }
+        return result;
+    }
+}
+
+****************************************************************************************************************************************
+cannibals and missionaries problem  
+
+package practice.Cannibals;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+public class Main {
+
+	public static void main(String[] args) {
+		/*System.out.println("==== Missionaries and practice.Cannibals Problem ====");
+		System.out.println("Choose the search method: ");
+		System.out.println("\t 1. Breadth-first search");
+		System.out.println("\t 2. Depth-limited search");
+		System.out.print("\nType your choice and press ENTER: ");
+
+		String optionStr = null;
+		try {
+			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+			optionStr = in.readLine();
+		} catch (IOException e) {
+			System.out.println("[ERROR] Fail to read the typed option.");
+			e.printStackTrace();
+		}
+
+		int option = Integer.parseInt(optionStr);*/
+		long startTime = Calendar.getInstance().getTimeInMillis();
+		int option=1;
+		State initialState = new State (3, 3, Position.LEFT, 0, 0);
+		switch(option) {
+		case 1:
+			executeBFS(initialState);
+			break;
+		case 2:
+			executeDLS(initialState);
+			break;
+		default:
+			System.out.println("[ERROR] Invalid search option.");
+		}
+		long endTime = Calendar.getInstance().getTimeInMillis();
+		System.out.println("Total time taken by existing code " + (endTime - startTime));
+	}
+
+	private static void executeBFS(State initialState) {
+		BreadthFirstSearch search = new BreadthFirstSearch();
+		State solution = search.exec(initialState);
+		printSolution(solution);
+	}
+
+	private static void executeDLS(State initialState) {
+		
+	}
+
+	private static void printSolution(State solution) {
+		if (null == solution) {
+			System.out.print("\nNo solution found.");
+		} else {
+			System.out.println("\nSolution (cannibalLeft,missionaryLeft,boat,cannibalRight,missionaryRight): ");
+			List<State> path = new ArrayList<State>();
+			State state = solution;
+			while(null!=state) {
+				path.add(state);
+				state = state.getParentState();
+			}
+
+			int depth = path.size() - 1;
+			for (int i = depth; i >= 0; i--) {
+				state = path.get(i);
+				if (state.isGoal()) {
+					System.out.print(state.toString());
+				} else {
+					System.out.print(state.toString() + " -> ");
+				}
+			}
+			System.out.println("\nDepth: " + depth);
+		}
+	}
+}
+
+
+package practice.Cannibals;
+
+import java.util.ArrayList;
+import java.util.List;
+
+enum Position {RIGHT, LEFT}
+
+public class State {
+
+	private int cannibalLeft;
+	private int missionaryLeft;
+	private int cannibalRight;
+	private int missionaryRight;
+	private Position boat;
+
+	private State parentState;
+
+	public State(int cannibalLeft, int missionaryLeft, Position boat,
+			int cannibalRight, int missionaryRight) {
+		this.cannibalLeft = cannibalLeft;
+		this.missionaryLeft = missionaryLeft;
+		this.boat = boat;
+		this.cannibalRight = cannibalRight;
+		this.missionaryRight = missionaryRight;
+	}
+
+	public boolean isGoal() {
+		return cannibalLeft == 0 && missionaryLeft == 0;
+	}
+
+	public boolean isValid() {
+		if (missionaryLeft >= 0 && missionaryRight >= 0 && cannibalLeft >= 0 && cannibalRight >= 0
+	               && (missionaryLeft == 0 || missionaryLeft >= cannibalLeft)
+	               && (missionaryRight == 0 || missionaryRight >= cannibalRight)) {
+			return true;
+		}
+		return false;
+	}
+
+	public List<State> generateSuccessors() {
+		List<State> successors = new ArrayList<State>();
+		if (boat == Position.LEFT) {
+			testAndAdd(successors, new State(cannibalLeft, missionaryLeft - 2, Position.RIGHT,
+					cannibalRight, missionaryRight + 2)); // Two missionaries cross left to right.
+			testAndAdd(successors, new State(cannibalLeft - 2, missionaryLeft, Position.RIGHT,
+					cannibalRight + 2, missionaryRight)); // Two cannibals cross left to right.
+			testAndAdd(successors, new State(cannibalLeft - 1, missionaryLeft - 1, Position.RIGHT,
+					cannibalRight + 1, missionaryRight + 1)); // One missionary and one cannibal cross left to right.
+			testAndAdd(successors, new State(cannibalLeft, missionaryLeft - 1, Position.RIGHT,
+					cannibalRight, missionaryRight + 1)); // One missionary crosses left to right.
+			testAndAdd(successors, new State(cannibalLeft - 1, missionaryLeft, Position.RIGHT,
+					cannibalRight + 1, missionaryRight)); // One cannibal crosses left to right.
+		} else {
+			testAndAdd(successors, new State(cannibalLeft, missionaryLeft + 2, Position.LEFT,
+					cannibalRight, missionaryRight - 2)); // Two missionaries cross right to left.
+			testAndAdd(successors, new State(cannibalLeft + 2, missionaryLeft, Position.LEFT,
+					cannibalRight - 2, missionaryRight)); // Two cannibals cross right to left.
+			testAndAdd(successors, new State(cannibalLeft + 1, missionaryLeft + 1, Position.LEFT,
+					cannibalRight - 1, missionaryRight - 1)); // One missionary and one cannibal cross right to left.
+			testAndAdd(successors, new State(cannibalLeft, missionaryLeft + 1, Position.LEFT,
+					cannibalRight, missionaryRight - 1)); // One missionary crosses right to left.
+			testAndAdd(successors, new State(cannibalLeft + 1, missionaryLeft, Position.LEFT,
+					cannibalRight - 1, missionaryRight)); // One cannibal crosses right to left.
+		}
+		return successors;
+	}
+
+	private void testAndAdd(List<State> successors, State newState) {
+		if (newState.isValid()) {
+			newState.setParentState(this);
+			successors.add(newState);
+		}
+	}
+
+	public int getCannibalLeft() {
+		return cannibalLeft;
+	}
+
+	public void setCannibalLeft(int cannibalLeft) {
+		this.cannibalLeft = cannibalLeft;
+	}
+
+	public int getMissionaryLeft() {
+		return missionaryLeft;
+	}
+
+	public void setMissionaryLeft(int missionaryLeft) {
+		this.missionaryLeft = missionaryLeft;
+	}
+
+	public int getCannibalRight() {
+		return cannibalRight;
+	}
+
+	public void setCannibalRight(int cannibalRight) {
+		this.cannibalRight = cannibalRight;
+	}
+
+	public int getMissionaryRight() {
+		return missionaryRight;
+	}
+
+	public void setMissionaryRight(int missionaryRight) {
+		this.missionaryRight = missionaryRight;
+	}
+
+	public void goToLeft() {
+		boat = Position.LEFT;
+	}
+
+	public void goToRight() {
+		boat = Position.RIGHT;
+	}
+
+	public boolean isOnLeft() {
+		return boat == Position.LEFT;
+	}
+
+	public boolean isOnRigth() {
+		return boat == Position.RIGHT;
+	}
+
+	public State getParentState() {
+		return parentState;
+	}
+
+	public void setParentState(State parentState) {
+		this.parentState = parentState;
+	}
+
+	@Override
+	public String toString() {
+		if (boat == Position.LEFT) {
+			return "(" + cannibalLeft + "," + missionaryLeft + ",L,"
+        			+ cannibalRight + "," + missionaryRight + ")";
+		} else {
+			return "(" + cannibalLeft + "," + missionaryLeft + ",R,"
+        			+ cannibalRight + "," + missionaryRight + ")";
+		}
+     }
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof State)) {
+			return false;
+		}
+		State s = (State) obj;
+        return (s.cannibalLeft == cannibalLeft && s.missionaryLeft == missionaryLeft
+        		&& s.boat == boat && s.cannibalRight == cannibalRight
+        		&& s.missionaryRight == missionaryRight);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = cannibalLeft;
+		result = 31 * result + missionaryLeft;
+		result = 31 * result + cannibalRight;
+		result = 31 * result + missionaryRight;
+		result = 31 * result + (boat != null ? boat.hashCode() : 0);
+		return result;
+	}
+}
+
+
+
+package practice.Cannibals;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
+
+// based on the breadth-first search algorithm present on the 3o Edition of the
+// "Artificial Intelligence A Modern Approach".
+public class BreadthFirstSearch {
+
+	public State exec(State initialState) {
+		if (initialState.isGoal()) {
+			return initialState;
+		}
+		Queue<State> frontier = new LinkedList<State>();	// FIFO queue
+		Set<State> explored = new HashSet<State>();
+		frontier.add(initialState);
+		int ifCondi=0;
+		while (!frontier.isEmpty()) {
+			State state = frontier.poll();
+			explored.add(state);
+			List<State> successors = state.generateSuccessors();
+			for (State child : successors) {
+				if (!explored.contains(child) /*|| !frontier.contains(child)*/) {
+					System.out.println("if condition statisfied count : " + ++ifCondi);
+					if (child.isGoal()) {
+						return child;
+					}
+					frontier.add(child);
+				}
+			}
+		}
+		return null;	// failure
+	}
+}
+
+****************************************************************************************************************************************
+-water jug problem 
+
+package practice;
+
+import java.util.LinkedList;
+
+/**
+ * Created by EZDI\haresh.p on 9/8/17.
+ */
+public class TwoWaterJug {
+
+    private LinkedList<Integer> adj[];
+
+    public static void main(String[] args) {
+        int n = 3, m = 5, d = 4;
+
+        System.out.println("Minimum number of steps required is " + minSteps(m, n, d));
+
+    }
+
+    private static int minSteps(int m, int n, int d) {
+        // To make sure that m is smaller than n
+        if (m > n) {
+            int t = m;
+            m = n;
+            n = t;
+        }
+
+
+        // For d > n we cant measure the water
+        // using the jugs
+        if (d > n)
+            return -1;
+
+        // If gcd of n and m does not divide d
+        // then solution is not possible
+        if ((d % gcd(n, m)) != 0)
+            return -1;
+
+        // Return minimum two cases:
+        // a) Water of n litre jug is poured into
+        //    m litre jug
+        // b) Vice versa of "a"
+        return min(pour(n, m, d),   // n to m
+                pour(m, n, d));  // m to n
+    }
+
+    private static int min(int n, int m) {
+        return n <= m ? n : m;
+    }
+
+    private static int pour(int fromCap, int toCap, int d) {
+        int from = fromCap;
+        int step = 1;
+
+        int to = 0;
+        while (true) {
+
+            int temp = min(from, toCap - to);
+            to += temp;
+            from -= temp;
+            step++;
+
+            if (from == d || to == d) {
+                break;
+            }
+            if (from == 0) {
+                from = fromCap;
+                step++;
+            }
+            if (to == toCap) {
+                to = 0;
+                step++;
+            }
+        }
+
+
+        return step;
+
+    }
+
+    private static int gcd(int n, int m) {
+        if (m == 0) {
+            return n;
+        }
+        return gcd(m, n % m);
+    }
+
+
+}
+
+****************************************************************************************************************************************
+-delete duplicate rows from a table which does not have primary key or any unique value in any column 
+
+DELETE FROM your_table
+WHERE rowid not in
+(SELECT MIN(rowid)
+FROM your_table
+GROUP BY column1, column2, column3);
+****************************************************************************************************************************************
+-exception handling in PL SQL 
+
+DECLARE 
+   c_id customers.id%type := &cc_id; 
+   c_name  customerS.No.ame%type; 
+   c_addr customers.address%type;  
+   -- user defined exception 
+   ex_invalid_id  EXCEPTION; 
+BEGIN 
+   IF c_id <= 0 THEN 
+      RAISE ex_invalid_id; 
+   ELSE 
+      SELECT  name, address INTO  c_name, c_addr 
+      FROM customers 
+      WHERE id = c_id;
+      DBMS_OUTPUT.PUT_LINE ('Name: '||  c_name);  
+      DBMS_OUTPUT.PUT_LINE ('Address: ' || c_addr); 
+   END IF; 
+
+EXCEPTION 
+   WHEN ex_invalid_id THEN 
+      dbms_output.put_line('ID must be greater than zero!'); 
+   WHEN no_data_found THEN 
+      dbms_output.put_line('No such customer!'); 
+   WHEN others THEN 
+      dbms_output.put_line('Error!');  
+END; 
+****************************************************************************************************************************************
+-The 8-puzzle  
+
+package practice.eightPuzzle;
+
+import java.util.Arrays;
+import java.util.Stack;
+
+public class Board {
+    //public Board(int[][] blocks)            construct a board from an N-by-N array of blocks
+    //                                        (where blocks[i][j] = block in row i, column j)
+    //public int dimension()                  board dimension N
+    //public int hamming()                    number of blocks out of place
+    //public int manhattan()                  sum of Manhattan distances between blocks and goal
+    //public boolean isGoal()                 is this board the goal board?
+    //public Board twin()                     a board obtained by exchanging two adjacent blocks in the same row
+    //public boolean equals(Object y)         does this board equal y?
+    //public Iterable<Board> neighbors()      all neighboring boards
+    //public String toString()                string representation of the board (in the output format specified below)
+
+    private final int[][] tiles;
+    private int size;
+    private int zeroCol;
+    private int zeroRow;
+    private int hamming;
+    private int manhattan;
+
+    public Board(int[][] blocks){
+        size = blocks.length;
+        tiles =new int[size][size];
+        for(int i = 0; i <size; i++){
+            for(int j = 0; j<size; j++){
+                this.tiles[i][j] = blocks[i][j];
+                if(tiles[i][j] == 0)
+                    setZero(i,j);
+            }
+        }
+    }
+
+    private void setZero(int i, int j){
+        this.zeroRow = i;
+        this.zeroCol = j;
+    }
+
+    public int dimension(){
+        return size;
+    }
+
+    public String toString() {
+        int N = size;
+        StringBuilder s = new StringBuilder();
+        s.append(N + "\n");
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                s.append(String.format("%2d ", tiles[i][j]));
+            }
+            s.append("\n");
+        }
+        return s.toString();
+    }
+
+    public int manhattan(){
+        int arrayPosition;
+        int tile;
+        manhattan = 0;
+        for(int i = 0; i <size; i++){
+            for(int j = 0; j<size; j++){
+                tile = tiles[i][j];
+                if(tile == 0)
+                    continue;
+                arrayPosition = 1+ j +(i*this.size);
+
+                if(arrayPosition-tile == 0)
+                    continue;
+                double ii = Math.floor(((double)(tile-1))/this.size);
+                double jj = (tile-1)%this.size;
+                manhattan +=  (Math.abs(i-ii)+Math.abs(j-jj));
+                //StdOut.println("Tile:" + tile + " [MOVES:"+ (Math.abs(i-ii)+Math.abs(j-jj))+"]       | Offsets: i "+  Math.abs(i-ii) + " j "+  Math.abs(j-jj));
+            }
+        }
+        return manhattan;
+    }
+
+    public int hamming(){
+        int arrayPosition;
+        int tile;
+        int displaced =0;
+        for(int i = 0; i <size; i++){
+            for(int j = 0; j<size; j++){
+                tile = tiles[i][j];
+                if(tile ==0)
+                    continue;
+                arrayPosition = 1+ j +(i*this.size);
+
+                if(tile != arrayPosition)
+                    displaced++;
+                else
+                    continue;
+            }
+        }
+        return displaced;
+    }
+
+    public boolean isGoal(){
+        int arrayPosition;
+        int tile;
+
+        for(int i = 0; i <size; i++){
+            for(int j = 0; j<size; j++){
+                if(i==size-1 && j == size -1)
+                    continue;
+                tile = tiles[i][j];
+                arrayPosition = 1+ j +(i*this.size);
+                if(tile != arrayPosition)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    private int[][]deepCopy(int[][] array){
+        int[][] copy = new int[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                copy[i][j] =array[i][j];
+            }
+        }
+        return copy;
+    }
+
+    public Board twin() {
+        int[][] twin = deepCopy(tiles);
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (tiles[i][j] != 0 && tiles[i][j + 1] != 0 && j < (size - 1)) {
+                    int swap = twin[i][j];
+                    twin[i][j] = twin[i][j + 1];
+                    twin[i][j + 1] = swap;
+                    return new Board(twin);
+                }
+            }
+        }
+        return new Board(twin);
+    }
+
+    public boolean equals(Object y){
+        Board that = (Board) y;
+        if (y == null) return false;
+        if (this == y) return true;
+        if (this.getClass() != y.getClass()) return false;
+        if (that.size != this.size) return false;
+
+        return Arrays.deepEquals(this.tiles, that.tiles );
+    }
+
+    public Iterable<Board> neighbors(){
+        Stack<Board> boards = new Stack<Board>();
+
+        if(zeroRow > 0){
+            Board boardUP = new Board(swap(tiles,-1,0));
+            boards.push(boardUP);
+        }
+
+        if(zeroRow < size-1){
+            Board boardDown = new Board(swap(tiles,1,0));
+            boards.push(boardDown);
+        }
+
+        if(zeroCol > 0){
+            Board boardLeft = new Board(swap(tiles,0,-1));
+            boards.push(boardLeft);
+        }
+
+        if(zeroCol <size-1){
+            Board boardRight = new Board(swap(tiles,0,1));
+            boards.push(boardRight);
+        }
+
+        return boards;
+
+    }
+    public int[][] swap(int[][] board, int rowOffset, int colOffset){
+        int[][] tempBoard =  deepCopy(board);
+        tempBoard[zeroRow][zeroCol]= tiles[zeroRow+rowOffset][zeroCol+colOffset];
+        tempBoard[zeroRow+rowOffset][zeroCol+colOffset]=0;
+
+        return tempBoard;
+    }
+}
+
+
+
+package practice.eightPuzzle;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
+public class Solver {
+    //public Solver(Board initial)            // find a solution to the initial board (using the A* algorithm)
+    //public boolean isSolvable()             // is the initial board solvable?
+    //public int moves()                      // min number of moves to solve initial board; -1 if no solution
+    //public Iterable<Board> solution()       // sequence of boards in a shortest solution; null if no solution
+    //public static void main(String[] args)  // solve a slider puzzle (given below)
+    // you will want to use comparator for hamming & man
+    //MinPq<node> pq as the priority queue
+
+    private Node goalNode;
+    private Queue<Node> pq = new LinkedList<>();
+    private Queue<Node> pqTwin = new LinkedList<Node>();
+
+    public class Node implements Comparable<Node>{
+        public Board board;
+        public Node previous;
+        public int moves;
+
+        public int compareTo(Node that){
+            //StdOut.println("i:" + this.priority() + " j:" + that.priority() + " "+ ((this.priority() > that.priority()) ? 1 :  -1));
+            if(this.priority() == that.priority()) return 0;
+            return (this.priority() > that.priority()) ? 1 :  -1;
+        }
+
+        public Node(Board b, Node prev, int m){
+            board = b;
+            previous = prev;
+            moves = m;
+        }
+
+        public int priority(){
+            return board.manhattan() + moves;
+        }
+    }
+
+    public Solver(Board initial){
+        Board initialBoard;
+        Queue<Board> neighbors = new LinkedList<>();
+        initialBoard = initial;
+
+        Node currentNode = new Node(initial, null, 0);
+        Node currentTwin = new Node(initial.twin(), null, 0);
+        pq.add(currentNode);
+        pqTwin.add(currentTwin);
+
+        while(!currentNode.board.isGoal() && !currentTwin.board.isGoal()){
+
+            currentNode = pq.poll();
+            currentTwin = pqTwin.poll();
+
+            for(Board b : currentNode.board.neighbors()) {
+                if(!b.equals(currentNode.board))
+                    pq.add(new Node(b, currentNode, currentNode.moves +1));
+            }
+
+            for(Board b : currentTwin.board.neighbors()) {
+                if(!b.equals(currentNode.board))
+                    pqTwin.add(new Node(b, currentTwin, currentTwin.moves +1));
+            }
+        }
+
+        if(currentNode.board.isGoal())
+            goalNode = currentNode;
+        else
+            goalNode = currentTwin;
+    }
+
+    public Stack<Board> solution(){
+        Stack<Board> trace = new Stack<>();
+        trace.push(goalNode.board);
+        while (goalNode.previous != null){
+            goalNode = goalNode.previous;
+            trace.push(goalNode.board);
+        }
+
+        return trace;
+    }
+
+    public boolean isSolvable(){
+        return goalNode != null;
+    }
+
+    public int moves(){
+        return goalNode.moves;
+    }
+
+    public static void main(String[] args) {
+        // create initial board from file
+        int[][] blocks = {
+                /*{1 ,2 ,3},
+                {0 ,5 ,6},
+                {7,8,4}*/
+
+                {0,  1  ,3},
+                {4  ,2  ,5},
+                {7  ,8  ,6}
+        };
+        Board initial = new Board(blocks);
+
+        // solve the puzzle
+        Solver solver = new Solver(initial);
+
+
+        // print solution to standard output
+        if (!solver.isSolvable())
+            System.out.println("No solution possible");
+        else {
+            System.out.println("Minimum number of moves = " + solver.moves());
+            Stack<Board> solution = solver.solution();
+            while (!solution.empty()){
+                System.out.println(solution.pop());
+            }
+
+        }
+    }
+}
+****************************************************************************************************************************************
+- solve sudoku
+
+public class Sudoku {
+
+	// dimension of input
+	static int N = 9;
+
+	// sample input
+	static int grid[][] = { { 3, 0, 6, 5, 0, 8, 4, 0, 0 }, //
+			{ 5, 2, 0, 0, 0, 0, 0, 0, 0 }, //
+			{ 0, 8, 7, 0, 0, 0, 0, 3, 1 }, //
+			{ 0, 0, 3, 0, 1, 0, 0, 8, 0 }, //
+			{ 9, 0, 0, 8, 6, 3, 0, 0, 5 }, //
+			{ 0, 5, 0, 0, 9, 0, 6, 0, 0 }, //
+			{ 1, 3, 0, 0, 0, 0, 2, 5, 0 }, //
+			{ 0, 0, 0, 0, 0, 0, 0, 7, 4 }, //
+			{ 0, 0, 5, 2, 0, 6, 3, 0, 0 } };
+
+	/**
+	* Class to abstract the representation of a cell. Cell => (x, y)
+	*/
+	static class Cell {
+
+		int row, col;
+
+		public Cell(int row, int col) {
+			super();
+			this.row = row;
+			this.col = col;
+		}
+
+		@Override
+		public String toString() {
+			return "Cell [row=" + row + ", col=" + col + "]";
+		}
+	};
+
+	/**
+	* Utility function to check whether @param value is valid for @param cell
+	*/
+
+	static boolean isValid(Cell cell, int value) {
+
+		if (grid[cell.row][cell.col] != 0) {
+			throw new RuntimeException(
+					"Cannot call for cell which already has a value");
+		}
+
+		// if v present row, return false
+		for (int c = 0; c < 9; c++) {
+			if (grid[cell.row][c] == value)
+				return false;
+		}
+
+		// if v present in col, return false
+		for (int r = 0; r < 9; r++) {
+			if (grid[r][cell.col] == value)
+				return false;
+		}
+
+		// if v present in grid, return false
+
+		// to get the grid we should calculate (x1,y1) (x2,y2)
+		int x1 = 3 * (cell.row / 3);
+		int y1 = 3 * (cell.col / 3);
+		int x2 = x1 + 2;
+		int y2 = y1 + 2;
+
+		for (int x = x1; x <= x2; x++)
+			for (int y = y1; y <= y2; y++)
+				if (grid[x][y] == value)
+					return false;
+
+		// if value not present in row, col and bounding box, return true
+		return true;
+	}
+
+	// simple function to get the next cell
+	// read for yourself, very simple and straight forward
+	static Cell getNextCell(Cell cur) {
+
+		int row = cur.row;
+		int col = cur.col;
+
+		// next cell => col++
+		col++;
+
+		// if col > 8, then col = 0, row++
+		// reached end of row, got to next row
+		if (col > 8) {
+			// goto next line
+			col = 0;
+			row++;
+		}
+
+		// reached end of matrix, return null
+		if (row > 8)
+			return null; // reached end
+
+		Cell next = new Cell(row, col);
+		return next;
+	}
+
+	// everything is put together here
+	// very simple solution
+	// must return true, if the soduku is solved, return false otherwise
+	static boolean solve(Cell cur) {
+
+		// if the cell is null, we have reached the end
+		if (cur == null)
+			return true;
+
+		// if grid[cur] already has a value, there is nothing to solve here,
+		// continue on to next cell
+		if (grid[cur.row][cur.col] != 0) {
+			// return whatever is being returned by solve(next)
+			// i.e the state of soduku's solution is not being determined by
+			// this cell, but by other cells
+			return solve(getNextCell(cur));
+		}
+
+		// this is where each possible value is being assigned to the cell, and
+		// checked if a solutions could be arrived at.
+
+		// if grid[cur] doesn't have a value
+		// try each possible value
+		for (int i = 1; i <= 9; i++) {
+			// check if valid, if valid, then update
+			boolean valid = isValid(cur, i);
+
+			if (!valid) // i not valid for this cell, try other values
+				continue;
+
+			// assign here
+			grid[cur.row][cur.col] = i;
+
+			// continue with next cell
+			boolean solved = solve(getNextCell(cur));
+			// if solved, return, else try other values
+			if (solved)
+				return true;
+			else
+				grid[cur.row][cur.col] = 0; // reset
+			// continue with other possible values
+		}
+
+		// if you reach here, then no value from 1 - 9 for this cell can solve
+		// return false
+		return false;
+	}
+
+	public static void main(String[] args) {
+		boolean solved = solve(new Cell(0, 0));
+		if (!solved) {
+			System.out.println("SUDOKU cannot be solved.");
+			return;
+		}
+		System.out.println("SOLUTION\n");
+		printGrid(grid);
+	}
+
+	// utility to print the grid
+	static void printGrid(int grid[][]) {
+		for (int row = 0; row < N; row++) {
+			for (int col = 0; col < N; col++)
+				System.out.print(grid[row][col]);
+			System.out.println();
+		}
+	}
+}
+****************************************************************************************************************************************
+snake
+
+
+package practice.snack;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+@SuppressWarnings("serial")
+public class Board extends JPanel implements ActionListener {
+
+// TODO: Implement a way for the player to win
+
+    // Holds height and width of the window
+    private final static int BOARDWIDTH = 1000;
+    private final static int BOARDHEIGHT = 980;
+
+    // Used to represent pixel size of food & our snake's joints
+    private final static int PIXELSIZE = 25;
+
+// The total amount of pixels the game could possibly have.
+// We don't want less, because the game would end prematurely.
+// We don't more because there would be no way to let the player win.
+
+    private final static int TOTALPIXELS = (BOARDWIDTH * BOARDHEIGHT)
+            / (PIXELSIZE * PIXELSIZE);
+
+    // Check to see if the game is running
+    private boolean inGame = true;
+
+    // Timer used to record tick times
+    private Timer timer;
+
+    // Used to set game speed, the lower the #, the faster the snake travels
+// which in turn
+// makes the game harder.
+    private static int speed = 45;
+
+    // Instances of our snake & food so we can use their methods
+    private Snake snake = new Snake();
+    private Food food = new Food();
+
+    public Board() {
+
+        addKeyListener(new Keys());
+        setBackground(Color.BLACK);
+        setFocusable(true);
+
+        setPreferredSize(new Dimension(BOARDWIDTH, BOARDHEIGHT));
+
+        initializeGame();
+    }
+
+    // Used to paint our components to the screen
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        draw(g);
+    }
+
+    // Draw our Snake & Food (Called on repaint()).
+    void draw(Graphics g) {
+        // Only draw if the game is running / the snake is alive
+        if (inGame == true) {
+            g.setColor(Color.green);
+            g.fillRect(food.getFoodX(), food.getFoodY(), PIXELSIZE, PIXELSIZE); // food
+
+            // Draw our snake.
+            for (int i = 0; i < snake.getJoints(); i++) {
+                // Snake's head
+                if (i == 0) {
+                    g.setColor(Color.RED);
+                    g.fillRect(snake.getSnakeX(i), snake.getSnakeY(i),
+                            PIXELSIZE, PIXELSIZE);
+                    // Body of snake
+                } else {
+                    g.fillRect(snake.getSnakeX(i), snake.getSnakeY(i),
+                            PIXELSIZE, PIXELSIZE);
+                }
+            }
+
+            // Sync our graphics together
+            Toolkit.getDefaultToolkit().sync();
+        } else {
+            // If we're not alive, then we end our game
+            endGame(g);
+        }
+    }
+
+    void initializeGame() {
+        snake.setJoints(3); // set our snake's initial size
+
+        // Create our snake's body
+        for (int i = 0; i < snake.getJoints(); i++) {
+            snake.setSnakeX(BOARDWIDTH / 2);
+            snake.setSnakeY(BOARDHEIGHT / 2);
+        }
+        // Start off our snake moving right
+        snake.setMovingRight(true);
+
+        // Generate our first 'food'
+        food.createFood();
+
+        // set the timer to record our game's speed / make the game move
+        timer = new Timer(speed, this);
+        timer.start();
+    }
+
+    // if our snake is in the close proximity of the food..
+    void checkFoodCollisions() {
+
+        if ((proximity(snake.getSnakeX(0), food.getFoodX(), 10))
+                && (proximity(snake.getSnakeY(0), food.getFoodY(), 10))) {
+
+            System.out.println("intersection");
+            // Add a 'joint' to our snake
+            snake.setJoints(snake.getJoints() + 1);
+            // Create new food
+            food.createFood();
+        }
+    }
+
+    // Used to check collisions with snake's self and board edges
+    void checkCollisions() {
+
+        // If the snake hits its' own joints..
+        for (int i = snake.getJoints(); i > 0; i--) {
+
+            // Snake cant intersect with itself if it's not larger than 5
+            if ((i > 5)
+                    && (snake.getSnakeX(0) == snake.getSnakeX(i) && (snake
+                    .getSnakeY(0) == snake.getSnakeY(i)))) {
+                inGame = false; // then the game ends
+            }
+        }
+
+        // If the snake intersects with the board edges..
+        if (snake.getSnakeY(0) >= BOARDHEIGHT) {
+            inGame = false;
+        }
+
+        if (snake.getSnakeY(0) < 0) {
+            inGame = false;
+        }
+
+        if (snake.getSnakeX(0) >= BOARDWIDTH) {
+            inGame = false;
+        }
+
+        if (snake.getSnakeX(0) < 0) {
+            inGame = false;
+        }
+
+        // If the game has ended, then we can stop our timer
+        if (!inGame) {
+            timer.stop();
+        }
+    }
+
+    void endGame(Graphics g) {
+
+        // Create a message telling the player the game is over
+        String message = "Game over";
+
+        // Create a new font instance
+        Font font = new Font("Times New Roman", Font.BOLD, 14);
+        FontMetrics metrics = getFontMetrics(font);
+
+        // Set the color of the text to red, and set the font
+        g.setColor(Color.red);
+        g.setFont(font);
+
+        // Draw the message to the board
+        g.drawString(message, (BOARDWIDTH - metrics.stringWidth(message)) / 2,
+                BOARDHEIGHT / 2);
+
+        System.out.println("Game Ended");
+
+    }
+
+    // Run constantly as long as we're in game.
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (inGame == true) {
+
+            checkFoodCollisions();
+            checkCollisions();
+            snake.move();
+
+            System.out.println(snake.getSnakeX(0) + " " + snake.getSnakeY(0)
+                    + " " + food.getFoodX() + ", " + food.getFoodY());
+        }
+        // Repaint or 'render' our screen
+        repaint();
+    }
+
+    private class Keys extends KeyAdapter {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+            int key = e.getKeyCode();
+
+            if ((key == KeyEvent.VK_LEFT) && (!snake.isMovingRight())) {
+                snake.setMovingLeft(true);
+                snake.setMovingUp(false);
+                snake.setMovingDown(false);
+            }
+
+            if ((key == KeyEvent.VK_RIGHT) && (!snake.isMovingLeft())) {
+                snake.setMovingRight(true);
+                snake.setMovingUp(false);
+                snake.setMovingDown(false);
+            }
+
+            if ((key == KeyEvent.VK_UP) && (!snake.isMovingDown())) {
+                snake.setMovingUp(true);
+                snake.setMovingRight(false);
+                snake.setMovingLeft(false);
+            }
+
+            if ((key == KeyEvent.VK_DOWN) && (!snake.isMovingUp())) {
+                snake.setMovingDown(true);
+                snake.setMovingRight(false);
+                snake.setMovingLeft(false);
+            }
+
+            if ((key == KeyEvent.VK_ENTER) && (inGame == false)) {
+
+                inGame = true;
+                snake.setMovingDown(false);
+                snake.setMovingRight(false);
+                snake.setMovingLeft(false);
+                snake.setMovingUp(false);
+
+                initializeGame();
+            }
+        }
+    }
+
+    private boolean proximity(int a, int b, int closeness) {
+        return Math.abs((long) a - b) <= closeness;
+    }
+
+    public static int getAllDots() {
+        return TOTALPIXELS;
+    }
+
+    public static int getDotSize() {
+        return PIXELSIZE;
+    }
+}
+
+
+
+package practice.snack;
+
+public class Food {
+
+    private Snake snake = new Snake();
+    private int foodX; // Stores X pos of our food
+    private int foodY; // Stores Y pos of our food
+
+    // Used to determine random position of food
+    private final int RANDOMPOSITION = 40;
+
+    public void createFood() {
+
+        // Set our food's x & y position to a random position
+
+        int location = (int) (Math.random() * RANDOMPOSITION);
+        foodX = ((location * Board.getDotSize()));
+
+        location = (int) (Math.random() * RANDOMPOSITION);
+        foodY = ((location * Board.getDotSize()));
+
+        if ((foodX == snake.getSnakeX(0)) && (foodY == snake.getSnakeY(0))) {
+            createFood();
+        }
+    }
+
+    public int getFoodX() {
+
+        return foodX;
+    }
+
+    public int getFoodY() {
+        return foodY;
+    }
+}
+
+package practice.snack;
+
+public class Snake {
+
+    // Stores the joints / body part locations for our snake
+    private final int[] x = new int[Board.getAllDots()];
+    private final int[] y = new int[Board.getAllDots()];
+
+    // Stores direction of our snake
+    private boolean movingLeft = false;
+    private boolean movingRight = false;
+    private boolean movingUp = false;
+    private boolean movingDown = false;
+
+    private int joints = 0; // Stores # of dots / joints the snake has (starts
+    // with 3)
+
+    public int getSnakeX(int index) {
+        return x[index];
+    }
+
+    public int getSnakeY(int index) {
+        return y[index];
+    }
+
+    public void setSnakeX(int i) {
+        x[0] = i;
+    }
+
+    public void setSnakeY(int i) {
+        y[0] = i;
+    }
+
+    public boolean isMovingLeft() {
+        return movingLeft;
+    }
+
+    public void setMovingLeft(boolean movingLeft) {
+        this.movingLeft = movingLeft;
+    }
+
+    public boolean isMovingRight() {
+        return movingRight;
+    }
+
+    public void setMovingRight(boolean movingRight) {
+        this.movingRight = movingRight;
+    }
+
+    public boolean isMovingUp() {
+        return movingUp;
+    }
+
+    public void setMovingUp(boolean movingUp) {
+        this.movingUp = movingUp;
+    }
+
+    public boolean isMovingDown() {
+        return movingDown;
+    }
+
+    public void setMovingDown(boolean movingDown) {
+        this.movingDown = movingDown;
+    }
+
+    public int getJoints() {
+        return joints;
+    }
+
+    public void setJoints(int j) {
+        joints = j;
+    }
+
+    public void move() {
+        for (int i = joints; i > 0; i--) {
+
+            // Moves the joints of the snake 'up the chain'
+            // Meaning, the joint of the snake all move up one
+            x[i] = x[(i - 1)];
+            y[i] = y[(i - 1)];
+        }
+
+        // Moves snake to the left
+        if (movingLeft) {
+            x[0] -= Board.getDotSize();
+        }
+        // To the right
+        if (movingRight) {
+            x[0] += Board.getDotSize();
+        }
+        // Down
+        if (movingDown) {
+            y[0] += Board.getDotSize();
+        }
+        // And finally up
+        if (movingUp) {
+            y[0] -= Board.getDotSize();
+        }
+
+        // Dotsize represents the size of the joint, so a pixel of DOTSIZE
+        // gets added on to the snake in that direction
+    }
+}
+
+package practice.snack;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class Game extends JFrame {
+
+    Game() {
+        add(new Board());
+        setResizable(false);
+        pack();
+
+        setTitle("Snake");
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public static void main(String[] args) {
+
+        // Creates a new thread so our GUI can process itself
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JFrame frame = new Game();
+                frame.setVisible(true);
+            }
+        });
+    }
+}
+****************************************************************************************************************************************
+ATM
+
+package atm;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+
+public class ATMStatus {
+	public Map<String, Integer> avaialableMoney = new HashMap<String, Integer>();
+
+	public ATMStatus() {
+		// MyLog.logit().log(Level.INFO, " ATMStatus Initialized");
+		System.out.println(" ATMStatus Initialized");
+		avaialableMoney.put("2000", 10);
+		avaialableMoney.put("100", 10);
+		avaialableMoney.put("50", 10);
+		avaialableMoney.put("10", 10);
+	}
+
+	public Map<String, Integer> getAvaialableMoney() {
+		return this.avaialableMoney;
+	}
+
+	public void setAvaialableMoney(Map<String, Integer> avaialableMoney) {
+		this.avaialableMoney = avaialableMoney;
+	}
+
+}
+
+
+package atm;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.logging.Level;
+
+public class CalculateMoneyAtm {
+	static Integer initialtwothousandrupees = 0;
+	static Integer initialhundressrupees = 0;
+	static Integer initialfiftyrupees = 0;
+	static Integer initialtenrupees = 0;
+
+	static Integer twothousandrupees = 0;
+	static Integer hundressrupees = 0;
+	static Integer fiftyrupees = 0;
+	static Integer tenrupees = 0;
+	static Integer totalAmount = 0;
+
+	public static void main(String[] args) {
+
+		ATMStatus atmStatus = new ATMStatus();
+		getMoney(atmStatus);
+
+	}// end of psvm
+
+	public static void reRun(ATMStatus atmStatus) {
+		// MyLog.logit().info("Would u like to credit more money ? y/n");
+		System.out.println("Would u like to credit more money ? y/n ");
+		Scanner input = new Scanner(System.in);
+		String choice = input.nextLine();
+		if (choice.equals("y") || choice.equals("Y")) {
+			getMoney(atmStatus);
+		}
+		if (choice.equals("n") || choice.equals("N")) {
+			System.exit(1);
+		} else {
+			// MyLog.logit().log(Level.SEVERE, "Invalid Input :"+choice);
+			System.out.println("Invalid Input");
+		}
+		reRun(atmStatus);
+	}
+
+	public static void getMoney(ATMStatus atmStatus) {
+		twothousandrupees = 0;
+		hundressrupees = 0;
+		fiftyrupees = 0;
+		tenrupees = 0;
+		totalAmount = 0;
+		Integer amountInt = 0;
+		System.out.println("Currency Avaialbe in ATM");
+		for (String key : atmStatus.getAvaialableMoney().keySet()) {
+			System.out.println(atmStatus.getAvaialableMoney().get(key) + ":"
+					+ key + " Notes");
+		}
+
+		for (String key : atmStatus.getAvaialableMoney().keySet()) {
+			if (key.equals("2000"))
+				initialtwothousandrupees = atmStatus.getAvaialableMoney().get(
+						key);
+			if (key.equals("100"))
+				initialhundressrupees = atmStatus.getAvaialableMoney().get(key);
+			if (key.equals("50"))
+				initialfiftyrupees = atmStatus.getAvaialableMoney().get(key);
+			if (key.equals("10"))
+				initialtenrupees = atmStatus.getAvaialableMoney().get(key);
+		}
+		totalAmount = ((initialtwothousandrupees * 2000)
+				+ (initialhundressrupees * 100) + (initialfiftyrupees * 50) + (initialtenrupees * 10));
+		System.out.println("Total Available amount in ATM : " + totalAmount);
+
+		Scanner input = new Scanner(System.in);
+		System.out.print("Enter Money > ");
+		String amount = input.nextLine();
+		try {
+			try {
+				amountInt = Integer.parseInt(amount);
+				if (amountInt % 10 != 0) {
+					System.out
+							.println("Please enter amount in multiple of 10 ");
+					reRun(atmStatus);
+				}
+			} catch (NumberFormatException ne) {
+				// MyLog.logit().log(Level.SEVERE, ne.getMessage());
+				ne.printStackTrace();
+			}
+			System.out.print("Required Amount : ");
+			System.out.println(amount);
+
+			totalAmount = ((initialtwothousandrupees * 2000)
+					+ (initialhundressrupees * 100) + (initialfiftyrupees * 50) + (initialtenrupees * 10));
+			System.out
+					.println("Total Available amount in ATM : " + totalAmount);
+			if (totalAmount < amountInt) {
+				System.out
+						.println("Total Avaialble amount is less in atm, Sorry for Inconvience");
+				reRun(atmStatus);
+			}
+
+			while (amountInt >= 2000 && initialtwothousandrupees > 0) {
+				initialtwothousandrupees = initialtwothousandrupees - 1;
+				twothousandrupees++;
+				amountInt = amountInt - 2000;
+			}
+
+			while (amountInt >= 100 && initialhundressrupees > 0) {
+				initialhundressrupees = initialhundressrupees - 1;
+				hundressrupees++;
+				amountInt = amountInt - 100;
+			}
+
+			while (amountInt >= 50 && initialfiftyrupees > 0) {
+				initialfiftyrupees = initialfiftyrupees - 1;
+				fiftyrupees++;
+				amountInt = amountInt - 50;
+			}
+			while (amountInt >= 10 && initialtenrupees > 0) {
+				initialtenrupees = initialtenrupees - 1;
+				tenrupees++;
+				amountInt = amountInt - 10;
+			}
+			if (amountInt > 0) {
+				System.out.println("No avalable balance in this unit");
+				reRun(atmStatus);
+			} else {
+				System.out.println("Plz take your money in currency");
+				Map<String, Integer> avaialableMoney = new HashMap<String, Integer>();
+				System.out.println("     No of 2000:" + twothousandrupees);
+				System.out.println("     No of 100:" + hundressrupees);
+				System.out.println("     No of 50:" + fiftyrupees);
+				System.out.println("     No of 10:" + tenrupees);
+				avaialableMoney.put("2000", (initialtwothousandrupees));
+				avaialableMoney.put("100", (initialhundressrupees));
+				avaialableMoney.put("50", (initialfiftyrupees));
+				avaialableMoney.put("10", (initialtenrupees));
+				atmStatus.setAvaialableMoney(avaialableMoney);
+			}
+			// return amountInt;
+		} catch (Exception e) {
+			// MyLog.logit().log(Level.SEVERE, e.getMessage());
+			e.printStackTrace();
+		}
+		System.out.println("Take your Amount = "
+				+ (2000 * twothousandrupees + 100 * hundressrupees + 50
+						* fiftyrupees + 10 * tenrupees));
+		reRun(atmStatus);
+
+	}// end of getMoney
+}
+
+
+****************************************************************************************************************************************
+- 8 queens problem
+
+package practice;
+
+public class NQueenProblem {
+    final int N = 4;
+
+    /* A utility function to print solution */
+    void printSolution(int board[][]) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++)
+                System.out.print(" " + board[i][j]
+                        + " ");
+            System.out.println();
+        }
+    }
+
+    /* A utility function to check if a queen can
+       be placed on board[row][col]. Note that this
+       function is called when "col" queens are already
+       placeed in columns from 0 to col -1. So we need
+       to check only left side for attacking queens */
+    boolean isSafe(int board[][], int row, int col) {
+        int i, j;
+        if (row == 2 && col == 1) {
+            System.out.println("debug");
+        }
+
+        /* Check this row on left side */
+        for (i = 0; i < col; i++)
+            if (board[row][i] == 1)
+                return false;
+
+        /* Check upper diagonal on left side */
+        for (i = row, j = col; i >= 0 && j >= 0; i--, j--)
+            if (board[i][j] == 1)
+                return false;
+
+        /* Check lower diagonal on left side */
+        for (i = row, j = col; j >= 0 && i < N; i++, j--)
+            if (board[i][j] == 1)
+                return false;
+
+        return true;
+    }
+
+    /* A recursive utility function to solve N
+       Queen problem */
+    boolean solveNQUtil(int board[][], int col) {
+        /* base case: If all queens are placed
+           then return true */
+        if (col >= N)
+            return true;
+
+        /* Consider this column and try placing
+           this queen in all rows one by one */
+        for (int i = 0; i < N; i++) {
+            /* Check if queen can be placed on
+               board[i][col] */
+            if (isSafe(board, i, col)) {
+                /* Place this queen in board[i][col] */
+                board[i][col] = 1;
+                printSolution(board);
+                System.out.println("");
+                /* recur to place rest of the queens */
+                if (solveNQUtil(board, col + 1) == true)
+                    return true;
+
+                /* If placing queen in board[i][col]
+                   doesn't lead to a solution then
+                   remove queen from board[i][col] */
+                board[i][col] = 0; // BACKTRACK
+                printSolution(board);
+                System.out.println("");
+            }
+        }
+
+        /* If queen can not be place in any row in
+           this colum col, then return false */
+        return false;
+    }
+
+    /* This function solves the N Queen problem using
+       Backtracking.  It mainly uses  solveNQUtil() to
+       solve the problem. It returns false if queens
+       cannot be placed, otherwise return true and
+       prints placement of queens in the form of 1s.
+       Please note that there may be more than one
+       solutions, this function prints one of the
+       feasible solutions.*/
+    boolean solveNQ() {
+        int board[][] = {{0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0}
+        };
+
+        if (solveNQUtil(board, 0) == false) {
+            System.out.print("Solution does not exist");
+            return false;
+        }
+
+        printSolution(board);
+        return true;
+    }
+
+    // driver program to test above function
+    public static void main(String args[]) {
+        NQueenProblem Queen = new NQueenProblem();
+        Queen.solveNQ();
+    }
+}
+****************************************************************************************************************************************
+- print heiarchy of ur organization from ceo to your position
+
+
+****************************************************************************************************************************************
+- 8 stone are there in that 7 are same size and 1 is smaller , Identify this in minimum iteration
+3 group , 3 3 2 , two group take and compare. if equals then other group have problem.
+take it and compare. it will be done in 2 iteration.
+****************************************************************************************************************************************
+- binary to decimal conversion and vise versa
+
+
+****************************************************************************************************************************************
+- http://howtodoinjava.com/2014/04/18/real-java-interview-questions-asked-for-oracle-enterprise-manager-project/
+****************************************************************************************************************************************
+- why u want to join oracle
+****************************************************************************************************************************************
+- if you join what benifite oracle can find from you
+****************************************************************************************************************************************
+- why you want to leave other organization
+****************************************************************************************************************************************
+- rotate nxn matrix in spiral order
+
+import java.io.*;
+ 
+public class SpiralPrint 
+{
+    // Function print matrix in spiral form
+    static void spiralPrint(int matrix[][])
+    {
+    	if(matrix.length == 0)
+            return;
+        // Initialize our four indexes
+        int top = 0;
+        int down = matrix.length - 1;
+        int left = 0;
+        int right = matrix[0].length - 1;
+    
+        while(true)
+        {
+            // Print top row
+            for(int j = left; j <= right; j++) System.out.print(matrix[top][j] + " ");
+            top++;
+            if(top > down || left > right) break;
+            //Print the rightmost column
+            for(int i = top; i <= down; i++) System.out.print(matrix[i][right] + " ");
+            right--;
+            if(top > down || left > right) break;
+            //Print the bottom row
+            for(int j = right; j >= left; j--) System.out.print(matrix[down][j] + " ");
+            down--;
+            if(top > down || left > right) break;
+            //Print the leftmost column
+            for(int i = down; i >= top; i--) System.out.print(matrix[i][left] + " ");
+            left++;
+            if(top > down || left > right) break;
+        }
+    }
+     
+    // driver program
+    public static void main (String[] args) 
+    {
+        int R = 3;
+        int C = 6;
+        int a[][] = { {1,  2,  3,  4,  5,  6},
+                      {7,  8,  9,  10, 11, 12},
+                      {13, 14, 15, 16, 17, 18},
+                      {19, 20, 21, 22, 23, 24}
+                    };
+        System.out.println(a[0].length);
+        for(int i =0;i<a.length;i++){
+        	for(int j=0;j<a[0].length;j++){
+        		System.out.print(a[i][j] + " ");
+        	}
+        	System.out.println(" ");
+        }
+        spiralPrint(a);
+    }
+}
+****************************************************************************************************************************************
+- matrix manupulation, sorting in differrent ways
+
+convert into 1d and sort
+using four loop.
+Arrays.sort();
+****************************************************************************************************************************************
+- queue, stack, link list implementation
+
+linked list
+
+
+/*
+ *  Java Program to Implement Singly Linked List
+ */
+ 
+import java.util.Scanner;
+ 
+/*  Class Node  */
+class Node
+{
+    protected int data;
+    protected Node link;
+ 
+    /*  Constructor  */
+    public Node()
+    {
+        link = null;
+        data = 0;
+    }    
+    /*  Constructor  */
+    public Node(int d,Node n)
+    {
+        data = d;
+        link = n;
+    }    
+    /*  Function to set link to next Node  */
+    public void setLink(Node n)
+    {
+        link = n;
+    }    
+    /*  Function to set data to current Node  */
+    public void setData(int d)
+    {
+        data = d;
+    }    
+    /*  Function to get link to next node  */
+    public Node getLink()
+    {
+        return link;
+    }    
+    /*  Function to get data from current Node  */
+    public int getData()
+    {
+        return data;
+    }
+}
+ 
+/* Class linkedList */
+class linkedList
+{
+    protected Node start;
+    protected Node end ;
+    public int size ;
+ 
+    /*  Constructor  */
+    public linkedList()
+    {
+        start = null;
+        end = null;
+        size = 0;
+    }
+    /*  Function to check if list is empty  */
+    public boolean isEmpty()
+    {
+        return start == null;
+    }
+    /*  Function to get size of list  */
+    public int getSize()
+    {
+        return size;
+    }    
+    /*  Function to insert an element at begining  */
+    public void insertAtStart(int val)
+    {
+        Node nptr = new Node(val, null);    
+        size++ ;    
+        if(start == null) 
+        {
+            start = nptr;
+            end = start;
+        }
+        else 
+        {
+            nptr.setLink(start);
+            start = nptr;
+        }
+    }
+    /*  Function to insert an element at end  */
+    public void insertAtEnd(int val)
+    {
+        Node nptr = new Node(val,null);    
+        size++ ;    
+        if(start == null) 
+        {
+            start = nptr;
+            end = start;
+        }
+        else 
+        {
+            end.setLink(nptr);
+            end = nptr;
+        }
+    }
+    /*  Function to insert an element at position  */
+    public void insertAtPos(int val , int pos)
+    {
+        Node nptr = new Node(val, null);                
+        Node ptr = start;
+        pos = pos - 1 ;
+        for (int i = 1; i < size; i++) 
+        {
+            if (i == pos) 
+            {
+                Node tmp = ptr.getLink() ;
+                ptr.setLink(nptr);
+                nptr.setLink(tmp);
+                break;
+            }
+            ptr = ptr.getLink();
+        }
+        size++ ;
+    }
+    /*  Function to delete an element at position  */
+    public void deleteAtPos(int pos)
+    {        
+        if (pos == 1) 
+        {
+            start = start.getLink();
+            size--; 
+            return ;
+        }
+        if (pos == size) 
+        {
+            Node s = start;
+            Node t = start;
+            while (s != end)
+            {
+                t = s;
+                s = s.getLink();
+            }
+            end = t;
+            end.setLink(null);
+            size --;
+            return;
+        }
+        Node ptr = start;
+        pos = pos - 1 ;
+        for (int i = 1; i < size - 1; i++) 
+        {
+            if (i == pos) 
+            {
+                Node tmp = ptr.getLink();
+                tmp = tmp.getLink();
+                ptr.setLink(tmp);
+                break;
+            }
+            ptr = ptr.getLink();
+        }
+        size-- ;
+    }    
+    /*  Function to display elements  */
+    public void display()
+    {
+        System.out.print("\nSingly Linked List = ");
+        if (size == 0) 
+        {
+            System.out.print("empty\n");
+            return;
+        }    
+        if (start.getLink() == null) 
+        {
+            System.out.println(start.getData() );
+            return;
+        }
+        Node ptr = start;
+        System.out.print(start.getData()+ "->");
+        ptr = start.getLink();
+        while (ptr.getLink() != null)
+        {
+            System.out.print(ptr.getData()+ "->");
+            ptr = ptr.getLink();
+        }
+        System.out.print(ptr.getData()+ "\n");
+    }
+}
+ 
+/*  Class SinglyLinkedList  */
+public class SinglyLinkedList
+{    
+    public static void main(String[] args)
+    {             
+        Scanner scan = new Scanner(System.in);
+        /* Creating object of class linkedList */
+        linkedList list = new linkedList(); 
+        System.out.println("Singly Linked List Test\n");          
+        char ch;
+        /*  Perform list operations  */
+        do
+        {
+            System.out.println("\nSingly Linked List Operations\n");
+            System.out.println("1. insert at begining");
+            System.out.println("2. insert at end");
+            System.out.println("3. insert at position");
+            System.out.println("4. delete at position");
+            System.out.println("5. check empty");
+            System.out.println("6. get size");            
+            int choice = scan.nextInt();            
+            switch (choice)
+            {
+            case 1 : 
+                System.out.println("Enter integer element to insert");
+                list.insertAtStart( scan.nextInt() );                     
+                break;                          
+            case 2 : 
+                System.out.println("Enter integer element to insert");
+                list.insertAtEnd( scan.nextInt() );                     
+                break;                         
+            case 3 : 
+                System.out.println("Enter integer element to insert");
+                int num = scan.nextInt() ;
+                System.out.println("Enter position");
+                int pos = scan.nextInt() ;
+                if (pos <= 1 || pos > list.getSize() )
+                    System.out.println("Invalid position\n");
+                else
+                    list.insertAtPos(num, pos);
+                break;                                          
+            case 4 : 
+                System.out.println("Enter position");
+                int p = scan.nextInt() ;
+                if (p < 1 || p > list.getSize() )
+                    System.out.println("Invalid position\n");
+                else
+                    list.deleteAtPos(p);
+                break;
+            case 5 : 
+                System.out.println("Empty status = "+ list.isEmpty());
+                break;                   
+            case 6 : 
+                System.out.println("Size = "+ list.getSize() +" \n");
+                break;                         
+             default : 
+                System.out.println("Wrong Entry \n ");
+                break;   
+            }
+            /*  Display List  */ 
+            list.display();
+            System.out.println("\nDo you want to continue (Type y or n) \n");
+            ch = scan.next().charAt(0);                        
+        } while (ch == 'Y'|| ch == 'y');               
+    }
+}
+****************************************************************************************************************************************
+- primary key foreign key composite key expain with practical example
+****************************************************************************************************************************************
+- get past 6 months records from the data base make query ( mainly date conversation)
+
+creation_date between add_months(trunc(sysdate,'mm'),-6) and last_day(add_months(trunc(sysdate,'mm'),0)
+****************************************************************************************************************************************
+- swap the number without using 3rd temp variable
+int a=2,b=3;
+        a = a +b;
+        b= a -b;
+        a = a - b;
+        System.out.println(a +  " " + b);
+
+****************************************************************************************************************************************
+-hotel management process design 
+
+****************************************************************************************************************************************
+-library management process design
+
+****************************************************************************************************************************************
+-BFS
+
+package practice;// Java program to print BFS traversal from a given source vertex.
+// BFS(int s) traverses vertices reachable from s.
+import java.util.Iterator;
+import java.util.LinkedList;
+ 
+// This class represents a directed graph using adjacency list
+// representation
+class Graph
+{
+    private int V;   // No. of vertices
+    private LinkedList<Integer> adj[]; //Adjacency Lists
+ 
+    // Constructor
+    Graph(int v)
+    {
+        V = v;
+        adj = new LinkedList[v];
+        for (int i=0; i<v; ++i)
+            adj[i] = new LinkedList();
+    }
+ 
+    // Function to add an edge into the graph
+    void addEdge(int v,int w)
+    {
+        adj[v].add(w);
+    }
+ 
+    // prints BFS traversal from a given source s
+    void BFS(int s)
+    {
+        // Mark all the vertices as not visited(By default
+        // set as false)
+        boolean visited[] = new boolean[V];
+ 
+        // Create a queue for BFS
+        LinkedList<Integer> queue = new LinkedList<Integer>();
+ 
+        // Mark the current node as visited and enqueue it
+        visited[s]=true;
+        queue.add(s);
+ 
+        while (queue.size() != 0)
+        {
+            // Dequeue a vertex from queue and print it
+            s = queue.poll();
+            System.out.print(s+" ");
+ 
+            // Get all adjacent vertices of the dequeued vertex s
+            // If a adjacent has not been visited, then mark it
+            // visited and enqueue it
+            Iterator<Integer> i = adj[s].listIterator();
+            while (i.hasNext())
+            {
+                int n = i.next();
+                if (!visited[n])
+                {
+                    visited[n] = true;
+                    queue.add(n);
+                }
+            }
+        }
+    }
+ 
+    // Driver method to
+    public static void main(String args[])
+    {
+        Graph g = new Graph(5);
+ 
+        g.addEdge(0, 1);
+        g.addEdge(0, 2);
+        g.addEdge(0, 3);
+        g.addEdge(1, 2);
+        g.addEdge(2, 0);
+        g.addEdge(2, 3);
+        g.addEdge(3, 4);
+        g.addEdge(4, 1);
+        g.addEdge(4, 2);
+ 
+        System.out.println("Following is Breadth First Traversal "+
+                           "(starting from vertex 2)");
+ 
+        g.BFS(2);
+    }
+}
+****************************************************************************************************************************************
+JDBC
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+ 
+public class StatementInsertExample {
+    public static void main(String... arg) {
+           Connection con = null;
+           Statement stmt = null;
+           try {
+                  // registering Oracle driver class
+                  Class.forName("oracle.jdbc.driver.OracleDriver");
+                   // getting connection
+                  con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","ankit", "Oracle123");
+                  System.out.println("Connection established successfully!");
+                  
+                  stmt = con.createStatement();
+                  //execute insert query
+                  int numberOfRowsInserted=stmt.executeUpdate("INSERT into EMPLOYEE(ID,NAME)" + "values (1, 'ankit') ");
+                  System.out.println("numberOfRowsInserted=" + numberOfRowsInserted);
+
+				ResultSet rs = stmt.executeQuery("select name, salary from emp");
+				while(rs.next()){
+					System.out.println(rs.getString("name"));
+					System.out.println(rs.getInt("salary"));
+				}
+				  stmt.close();
+				  rs.close();
+				  con.close();
+           } catch (ClassNotFoundException e) {
+                  e.printStackTrace();
+           } catch (SQLException e) {
+                  e.printStackTrace();
+           }
+           finally{
+                  try {
+                        if(stmt!=null) stmt.close(); //close Statement
+                        if(rs!=null) rs.close(); // close connection
+						if(con!=null) con.close(); // close connection
+                  } catch (SQLException e) {
+                        e.printStackTrace();
+                  }
+           }
+    }
+}
+
+Longest SubString
+****************************************************************************************************************************************
+import java.util.HashSet;
+import java.util.Set;
+
+public class MyLongestSubstr {
+	private Set<String> subStrList = new HashSet<String>();
+	private int finalSubStrSize = 0;
+
+	public Set<String> getLongestSubstr(String input) {
+		// reset instance variables
+		subStrList.clear();
+		finalSubStrSize = 0;
+		// have a boolean flag on each character ascii value
+		boolean[] flag = new boolean[256];
+		int j = 0;
+		char[] inputCharArr = input.toCharArray();
+		for (int i = 0; i < inputCharArr.length; i++) {
+			char c = inputCharArr[i];
+			if (flag[c]) {
+				extractSubString(inputCharArr, j, i);
+				for (int k = j; k < i; k++) {
+					if (inputCharArr[k] == c) {
+						j = k + 1;
+						break;
+					}
+					//flag[c] = false;
+				}
+			} else {
+				flag[c] = true;
+			}
+		}
+		extractSubString(inputCharArr, j, inputCharArr.length);
+		return subStrList;
+	}
+
+	private String extractSubString(char[] inputArr, int start, int end) {
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = start; i < end; i++) {
+			sb.append(inputArr[i]);
+		}
+		String subStr = sb.toString();
+		if (subStr.length() > finalSubStrSize) {
+			finalSubStrSize = subStr.length();
+			subStrList.clear();
+			subStrList.add(subStr);
+		} else if (subStr.length() == finalSubStrSize) {
+			subStrList.add(subStr);
+		}
+		return sb.toString();
+	}
+
+	public static void main(String a[]) {
+		MyLongestSubstr mls = new MyLongestSubstr();
+		System.out.println(mls.getLongestSubstr("java2novice"));
+		 System.out.println(mls.getLongestSubstr("java_language_is_sweet"));
+		 System.out.println(mls.getLongestSubstr("java_java_java_java"));
+		 System.out.println(mls.getLongestSubstr("abcabcbb"));
+	}
+}
+****************************************************************************************************************************************
+removeDuplicates from array
+
+public class MyDuplicateElements {
+ 
+    public static int[] removeDuplicates(int[] input){
+         
+        int j = 0;
+        int i = 1;
+        //return if the array length is less than 2
+        if(input.length < 2){
+            return input;
+        }
+        while(i < input.length){
+            if(input[i] == input[j]){
+                i++;
+            }else{
+                input[++j] = input[i++];
+            }    
+        }
+        int[] output = new int[j+1];
+        for(int k=0; k<output.length; k++){
+            output[k] = input[k];
+        }
+         
+        return output;
+    }
+     
+    public static void main(String a[]){
+        int[] input1 = {2,3,6,6,8,9,10,10,10,12,12};
+        int[] output = removeDuplicates(input1);
+        for(int i:output){
+            System.out.print(i+" ");
+        }
+    }
+}
+ 
+ ***************************************************************************************************************************************************
+ StackSort
+ 
+ import java.util.Stack;
+
+public class StackSort {
+
+	public static Stack<Integer> sortStack(Stack<Integer> input) {
+
+		Stack<Integer> tmpStack = new Stack<Integer>();
+		System.out.println("=============== debug logs ================");
+		while (!input.isEmpty()) {
+			int tmp = input.pop();
+			System.out.println("Element taken out: " + tmp);
+			while (!tmpStack.isEmpty() && tmpStack.peek() > tmp) {
+				input.push(tmpStack.pop());
+			}
+			tmpStack.push(tmp);
+			System.out.println("input: " + input);
+			System.out.println("tmpStack: " + tmpStack);
+		}
+		System.out.println("=============== debug logs ended ================");
+
+		return tmpStack;
+	}
+
+	public static void main(String a[]) {
+		Stack<Integer> input = new Stack<Integer>();
+		input.add(34);
+		input.add(3);
+		input.add(31);
+		input.add(98);
+		input.add(92);
+		input.add(23);
+		System.out.println("input: " + input);
+		System.out.println("final sorted list: " + sortStack(input));
+	}
+}
+
+
+
+
+
+****************************************************************************************************************************************
+- program add/ subtract date without using java api
+
+
+
+
+package practice;
+
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+public class MyDate
+{
+    private static final Map<Integer, Integer>  daysInMonth;
+
+    static
+    {
+        daysInMonth = new HashMap<Integer, Integer>();
+        daysInMonth.put(1, 31);
+        daysInMonth.put(2, 28);
+        daysInMonth.put(3, 31);
+        daysInMonth.put(4, 30);
+        daysInMonth.put(5, 31);
+        daysInMonth.put(6, 30);
+        daysInMonth.put(7, 31);
+        daysInMonth.put(8, 31);
+        daysInMonth.put(9, 30);
+        daysInMonth.put(10, 31);
+        daysInMonth.put(11, 30);
+        daysInMonth.put(12, 31);
+    }
+
+    private int                                 day;
+    private int                                 month;
+    private int                                 year;
+    private int                                 amount;
+
+    public MyDate(int day, int month, int year)
+    {
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+
+    public MyDate addOrSubDays(int amount)
+    {
+        this.amount = amount;
+        return addOrSubDays(this.day + this.amount, this.month, this.year);
+    }
+
+    public static void main(String[] args)
+    {
+        int amount = 0;
+        amount = -15;
+//        amount = 21;
+
+        MyDate myDate = new MyDate(11, 8, 2017);
+        MyDate addOrSubDays = myDate.addOrSubDays(amount);
+
+        System.out.println(addOrSubDays.getDay() + "-" + addOrSubDays.getMonth() + "-" + addOrSubDays.getYear());
+
+        // Testing
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, amount);
+        System.out.println(cal.getTime());
+    }
+
+    private MyDate addOrSubDays(int days, int month, int year)
+    {
+            if (days > 0 && days <= getNoOfDaysInMonth(month, year)) {
+                return new MyDate(days, month, year);
+            } else if (days <= 0) {
+                month = month - 1;
+                if (month == 0) {
+                    month = 12;
+                    year = year - 1;
+                }
+                days = days + getNoOfDaysInMonth(month, year)  ;
+            } else {
+                days = days - getNoOfDaysInMonth(month, year);
+                month = month + 1;
+                if (month > 12) {
+                    month = 1;
+                    year = year + 1;
+                }
+
+            }
+        return addOrSubDays(days, month, year);
+    }
+
+    private int getNoOfDaysInMonth(int month, int year)
+    {
+        if (month == 2 && checkIsLeepYear(year))
+        {
+            return daysInMonth.get(month) + 1;
+        }
+        return daysInMonth.get(month);
+    }
+
+    private boolean checkIsLeepYear(int year)
+    {
+        if ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0)))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public int getDay()
+    {
+        return day;
+    }
+
+    public int getMonth()
+    {
+        return month;
+    }
+
+    public int getYear()
+    {
+        return year;
+    }
+
+    public int getAmount()
+    {
+        return amount;
+    }
+}
+
+
+***************************************************************************************************************************************************
+number of days between two dates
+
+
+package practice;
+
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+public class MyDateDiff {
+    private static final Map<Integer, Integer> daysInMonth;
+
+    static {
+        daysInMonth = new HashMap<Integer, Integer>();
+        daysInMonth.put(1, 31);
+        daysInMonth.put(2, 28);
+        daysInMonth.put(3, 31);
+        daysInMonth.put(4, 30);
+        daysInMonth.put(5, 31);
+        daysInMonth.put(6, 30);
+        daysInMonth.put(7, 31);
+        daysInMonth.put(8, 31);
+        daysInMonth.put(9, 30);
+        daysInMonth.put(10, 31);
+        daysInMonth.put(11, 30);
+        daysInMonth.put(12, 31);
+    }
+
+    private int day;
+    private int month;
+    private int year;
+    private int amount;
+
+    public MyDateDiff(int day, int month, int year) {
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+
+    public MyDateDiff addOrSubDays(int amount) {
+        this.amount = amount;
+        return addOrSubDays(this.day + this.amount, this.month, this.year);
+    }
+
+
+    public static int countLeapYears(MyDateDiff d) {
+        int years = d.year;
+
+        // Check if the current year needs to be considered
+        // for the count of leap years or not
+        if (d.month <= 2)
+            years--;
+
+        // An year is a leap year if it is a multiple of 4,
+        // multiple of 400 and not a multiple of 100.
+        return years / 4 - years / 100 + years / 400;
+    }
+
+    public static long getDifference(MyDateDiff dt1, MyDateDiff dt2) {
+        // COUNT TOTAL NUMBER OF DAYS BEFORE FIRST DATE 'dt1'
+
+        // initialize count using years and day
+        long n1 = dt1.year * 365 + dt1.day;
+
+        // Add days for months in given date
+        for (int i = 1; i <= dt1.month ; i++)
+            n1 += daysInMonth.get(i);
+
+        // Since every leap year is of 366 days,
+        // Add a day for every leap year
+        n1 += countLeapYears(dt1);
+
+        // SIMILARLY, COUNT TOTAL NUMBER OF DAYS BEFORE 'dt2'
+
+    long n2 = dt2.year * 365 + dt2.day;
+        for (int i = 1; i <= dt2.month ; i++)
+            n2 += daysInMonth.get(i);
+        n2 += countLeapYears(dt2);
+
+        // return difference between two counts
+        return (n2 - n1);
+    }
+
+    public static void main(String[] args) {
+        int amount = 0;
+        amount = -15;
+//        amount = 21;
+
+        MyDateDiff myDate = new MyDateDiff(11, 8, 2017);
+        MyDateDiff myDate1 = new MyDateDiff(13, 8, 2017);
+
+        System.out.println(getDifference(myDate, myDate1));
+        // Testing
+        Calendar cal = Calendar.getInstance();
+        long timeInMillis = cal.getTimeInMillis();
+        cal.add(Calendar.DAY_OF_MONTH, 2);
+        long timeInMillis1 = cal.getTimeInMillis();
+        long diff = timeInMillis1 - timeInMillis;
+        System.out.println(diff / (24 * 60 * 60 * 1000));
+    }
+
+    private MyDateDiff addOrSubDays(int days, int month, int year) {
+        if (days > 0 && days <= getNoOfDaysInMonth(month, year)) {
+            return new MyDateDiff(days, month, year);
+        } else if (days <= 0) {
+            month = month - 1;
+            if (month == 0) {
+                month = 12;
+                year = year - 1;
+            }
+            days = days + getNoOfDaysInMonth(month, year);
+        } else {
+            days = days - getNoOfDaysInMonth(month, year);
+            month = month + 1;
+            if (month > 12) {
+                month = 1;
+                year = year + 1;
+            }
+
+        }
+        return addOrSubDays(days, month, year);
+    }
+
+    private int getNoOfDaysInMonth(int month, int year) {
+        if (month == 2 && checkIsLeepYear(year)) {
+            return daysInMonth.get(month) + 1;
+        }
+        return daysInMonth.get(month);
+    }
+
+    private boolean checkIsLeepYear(int year) {
+        if ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0))) {
+            return true;
+        }
+        return false;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MyDateDiff)) return false;
+
+        MyDateDiff that = (MyDateDiff) o;
+
+        if (day != that.day) return false;
+        if (month != that.month) return false;
+        return year == that.year;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = day;
+        result = 31 * result + month;
+        result = 31 * result + year;
+        return result;
+    }
+}
