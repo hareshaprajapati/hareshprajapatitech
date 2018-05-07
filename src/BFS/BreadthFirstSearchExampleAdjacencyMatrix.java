@@ -9,6 +9,7 @@ package BFS;
 10		>30----->60/
 
 as there is an edge from 40 to 10 so value is 1 in adjancey_matrix for a[0][1]
+
 					40  10  20  30  60  50  70
 				0  {0,  1,  1,  0,  0,  0,  0  }, // Node 1: 40
 				1  {0,  0,  0,  1,  0,  0,  0  }, // Node 2 :10
@@ -116,13 +117,14 @@ public class BreadthFirstSearchExampleAdjacencyMatrix
 		nodes.add(node50);
 		nodes.add(node70);
 		int adjacency_matrix[][] = {
-				{0,1,1,0,0,0,0}, // Node 1: 40
-				{0,0,0,1,0,0,0}, // Node 2 :10
-				{0,1,0,1,1,1,0}, // Node 3: 20
-				{0,0,0,0,1,0,0}, // Node 4: 30
-				{0,0,0,0,0,0,1}, // Node 5: 60
-				{0,0,0,0,0,0,1}, // Node 6: 50
-				{0,0,0,0,0,0,0}, // Node 7: 70
+				//     40  10  20  30  60  50  70
+				/*0*/  {0,  1,  1,  0,  0,  0,  0  }, // Node 1: 40
+				/*1  */{0,  0,  0,  1,  0,  0,  0  }, // Node 2 :10
+				/*2  */{0,  1,  0,  1,  1,  1,  0  }, // Node 3: 20
+				/*3  */{0,  0,  0,  0,  1,  0,  0  }, // Node 4: 30
+				/*4  */{0,  0,  0,  0,  0,  0,  1  }, // Node 5: 60
+				/*5  */{0,  0,  0,  0,  0,  0,  1  }, // Node 6: 50
+				/*6  */{0,  0,  0,  0,  0,  0,  0  }, // Node 7: 70
 		};
 		System.out.println("The BFS traversal of the graph is ");
 		BreadthFirstSearchExampleAdjacencyMatrix bfsExample = new BreadthFirstSearchExampleAdjacencyMatrix();

@@ -56,7 +56,7 @@ public class BreadthFirstSearchExampleNeighbourList
 		{
  
 			Node element=queue.remove();
-			System.out.print(element.data + "t");
+			System.out.print(element.data + "\t");
 			List<Node> neighbours=element.getNeighbours();
 			for (int i = 0; i < neighbours.size(); i++) {
 				Node n=neighbours.get(i);
