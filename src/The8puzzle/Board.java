@@ -1,6 +1,8 @@
 package The8puzzle;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class Board {
@@ -152,25 +154,30 @@ public class Board {
 
     public Iterable<Board> neighbors(){
         Stack<Board> boards = new Stack<Board>();
+//        Queue<Board> boards = new LinkedList<>();
 
         if(zeroRow > 0){
             Board boardUP = new Board(swap(tiles,-1,0));
             boards.push(boardUP);
+//            boards.add(boardUP);
         }
 
         if(zeroRow < size-1){
             Board boardDown = new Board(swap(tiles,1,0));
             boards.push(boardDown);
+//            boards.add(boardDown);
         }
 
         if(zeroCol > 0){
             Board boardLeft = new Board(swap(tiles,0,-1));
             boards.push(boardLeft);
+//            boards.add(boardLeft);
         }
 
         if(zeroCol <size-1){
             Board boardRight = new Board(swap(tiles,0,1));
             boards.push(boardRight);
+//            boards.add(boardRight);
         }
 
         return boards;
