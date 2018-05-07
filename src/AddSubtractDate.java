@@ -22,6 +22,22 @@ public class AddSubtractDate {
         daysInMonth.put(12, 31);
     }
 
+    public static void main(String[] args) {
+        int amount = 0;
+        amount = -15;
+//        amount = 21;
+
+        AddSubtractDate addSubtractDate = new AddSubtractDate(11, 8, 2017);
+        AddSubtractDate addOrSubDays = addSubtractDate.addOrSubDays(amount);
+
+        System.out.println(addOrSubDays.getDay() + "-" + addOrSubDays.getMonth() + "-" + addOrSubDays.getYear());
+
+        // Testing
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, amount);
+        System.out.println(cal.getTime());
+    }
+
     private int day;
     private int month;
     private int year;
@@ -38,21 +54,7 @@ public class AddSubtractDate {
         return addOrSubDays(this.day + this.amount, this.month, this.year);
     }
 
-    public static void main(String[] args) {
-        int amount = 0;
-        amount = -15;
-//        amount = 21;
 
-        AddSubtractDate addSubtractDate = new AddSubtractDate(11, 8, 2017);
-        AddSubtractDate addOrSubDays = addSubtractDate.addOrSubDays(amount);
-
-        System.out.println(addOrSubDays.getDay() + "-" + addOrSubDays.getMonth() + "-" + addOrSubDays.getYear());
-
-        // Testing
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, amount);
-        System.out.println(cal.getTime());
-    }
 
     private AddSubtractDate addOrSubDays(int days, int month, int year) {
         if (days > 0 && days <= getNoOfDaysInMonth(month, year)) {

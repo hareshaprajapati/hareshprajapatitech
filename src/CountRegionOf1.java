@@ -69,7 +69,7 @@ public class CountRegionOf1 {
             }
         }
         for (int k = i + 1, p = j-1; k < a.length && p > 0; k++,p--) {
-            if (p>0 && a[k][p] == 1 ) {
+            if (/*p>0 &&*/ a[k][p] == 1 ) {
                 if(cp[k][p] != 0){
                     result = 1;
                     cp[k][p] = 0;
