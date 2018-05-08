@@ -14,9 +14,12 @@ public class StatementInsertExample {
                   System.out.println("Connection established successfully!");
                   
                   stmt = con.createStatement();
-                  //execute insert query
-                  int numberOfRowsInserted=stmt.executeUpdate("INSERT into EMPLOYEE(ID,NAME)" + "values (1, 'ankit') ");
-                  System.out.println("numberOfRowsInserted=" + numberOfRowsInserted);
+               PreparedStatement preparedStatement = con.prepareStatement("INSERT into EMPLOYEE(ID,NAME)\" + \"values (:id, :name)");
+               preparedStatement.setInt(0,1);
+
+               //execute insert query
+//                  int numberOfRowsInserted=stmt.executeUpdate("INSERT into EMPLOYEE(ID,NAME)" + "values (1, 'ankit') ");
+//                  System.out.println("numberOfRowsInserted=" + numberOfRowsInserted);
 
 				rs = stmt.executeQuery("select name, salary from emp");
 				while(rs.next()){

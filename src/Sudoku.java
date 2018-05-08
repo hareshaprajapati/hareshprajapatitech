@@ -1,18 +1,48 @@
+/*
+
+
+initial grid
+3 0 6 5 0 8 4 0 0
+5 2 0 0 0 0 0 0 0
+0 8 7 0 0 0 0 3 1
+0 0 3 0 1 0 0 8 0
+9 0 0 8 6 3 0 0 5
+0 5 0 0 9 0 6 0 0
+1 3 0 0 0 0 2 5 0
+0 0 0 0 0 0 0 7 4
+0 0 5 2 0 6 3 0 0
+SOLUTION
+
+3 1 6 5 7 8 4 9 2
+5 2 9 1 3 4 7 6 8
+4 8 7 6 2 9 5 3 1
+2 6 3 4 1 5 9 8 7
+9 7 4 8 6 3 1 2 5
+8 5 1 7 9 2 6 4 3
+1 3 8 9 4 7 2 5 6
+6 9 2 3 5 1 8 7 4
+7 4 5 2 8 6 3 1 9
+
+ */
+
 public class Sudoku {
 
 	// dimension of input
 	static int N = 9;
 
 	// sample input
-	static int grid[][] = { { 3, 0, 6, 5, 0, 8, 4, 0, 0 }, //
-			{ 5, 2, 0, 0, 0, 0, 0, 0, 0 }, //
-			{ 0, 8, 7, 0, 0, 0, 0, 3, 1 }, //
-			{ 0, 0, 3, 0, 1, 0, 0, 8, 0 }, //
-			{ 9, 0, 0, 8, 6, 3, 0, 0, 5 }, //
-			{ 0, 5, 0, 0, 9, 0, 6, 0, 0 }, //
-			{ 1, 3, 0, 0, 0, 0, 2, 5, 0 }, //
-			{ 0, 0, 0, 0, 0, 0, 0, 7, 4 }, //
-			{ 0, 0, 5, 2, 0, 6, 3, 0, 0 } };
+	static int grid[][] =
+			{
+				{ 3, 0, 6, 5, 0, 8, 4, 0, 0 }, //
+				{ 5, 2, 0, 0, 0, 0, 0, 0, 0 }, //
+				{ 0, 8, 7, 0, 0, 0, 0, 3, 1 }, //
+				{ 0, 0, 3, 0, 1, 0, 0, 8, 0 }, //
+				{ 9, 0, 0, 8, 6, 3, 0, 0, 5 }, //
+				{ 0, 5, 0, 0, 9, 0, 6, 0, 0 }, //
+				{ 1, 3, 0, 0, 0, 0, 2, 5, 0 }, //
+				{ 0, 0, 0, 0, 0, 0, 0, 7, 4 }, //
+				{ 0, 0, 5, 2, 0, 6, 3, 0, 0 }
+			};
 
 	/**
 	* Class to abstract the representation of a cell. Cell => (x, y)
@@ -40,8 +70,9 @@ public class Sudoku {
 	static boolean isValid(Cell cell, int value) {
 
 		if (grid[cell.row][cell.col] != 0) {
-			throw new RuntimeException(
-					"Cannot call for cell which already has a value");
+			return false;
+//			throw new RuntimeException(
+//					"Cannot call for cell which already has a value");
 		}
 
 		// if v present row, return false
@@ -105,8 +136,11 @@ public class Sudoku {
 	static boolean solve(Cell cur) {
 
 		// if the cell is null, we have reached the end
-		if (cur == null)
-			return true;
+		if (cur == null) {
+//			System.out.println("cur == null");
+//			printGrid(grid);
+				return true;
+		}
 
 		// if grid[cur] already has a value, there is nothing to solve here,
 		// continue on to next cell
@@ -114,6 +148,8 @@ public class Sudoku {
 			// return whatever is being returned by solve(next)
 			// i.e the state of soduku's solution is not being determined by
 			// this cell, but by other cells
+//			System.out.println("if (grid[cur.row][cur.col] != 0) {");
+//			printGrid(grid);
 			return solve(getNextCell(cur));
 		}
 
@@ -129,16 +165,25 @@ public class Sudoku {
 			if (!valid) // i not valid for this cell, try other values
 				continue;
 
+//			System.out.println("assigning value from : " + grid[cur.row][cur.col] + " to " + i);
 			// assign here
 			grid[cur.row][cur.col] = i;
+//			printGrid(grid);
 
 			// continue with next cell
 			boolean solved = solve(getNextCell(cur));
 			// if solved, return, else try other values
-			if (solved)
+			if (solved){
+//				System.out.println("if (solved)");
+//				printGrid(grid);
 				return true;
-			else
+			}else{
+//				System.out.println("if (solved) else setting 0 to value of " + grid[cur.row][cur.col] + " row " + cur.row + " col " + cur.col);
 				grid[cur.row][cur.col] = 0; // reset
+//				printGrid(grid);
+			}
+
+
 			// continue with other possible values
 		}
 
@@ -148,6 +193,8 @@ public class Sudoku {
 	}
 
 	public static void main(String[] args) {
+		System.out.println("initial grid");
+		printGrid(grid);
 		boolean solved = solve(new Cell(0, 0));
 		if (!solved) {
 			System.out.println("SUDOKU cannot be solved.");
@@ -161,7 +208,7 @@ public class Sudoku {
 	static void printGrid(int grid[][]) {
 		for (int row = 0; row < N; row++) {
 			for (int col = 0; col < N; col++)
-				System.out.print(grid[row][col]);
+				System.out.print(grid[row][col] + " ");
 			System.out.println();
 		}
 	}
