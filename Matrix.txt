@@ -41,6 +41,18 @@ ATM
 - removeDuplicates from array
 -StackSort
 
+
+1. Sum of digit without using  +, - and & operator.
+2. Let Array be {1, 4, 45, 6, 10, -8} and sum of 2 digit from array to find be 16 (answer is 10 and 6, need to perform with only 1 loop)
+3. find largest substitution using 2 characters from string (ex: Input: abdbcbcbcbbbda Output: bcbcbcbbb as it is largest string made by 2 characters only)
+4. Check for balanced parentheses in an expression (Need to perform with 4 input characters (, ), [ and ]. Input: ()()[] -> Balanced, ()()[(] -> Unbalanced)
+
+Difference between Array and ArrayList
+About Current Company.
+Current project, technology and architecture.
+
+
+
 solution
 ****************************************************************************************************************************************
  count region of 1 
