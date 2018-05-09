@@ -48,7 +48,7 @@ public class Board {
     public String toString() {
         int N = size;
         StringBuilder s = new StringBuilder();
-        s.append(N + "\n");
+//        s.append(N + "\n");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 s.append(String.format("%2d ", tiles[i][j]));

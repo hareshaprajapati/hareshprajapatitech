@@ -1,3 +1,17 @@
+/*
+
+Initail board
+ 0  0  0  0
+ 0  0  0  0
+ 0  0  0  0
+ 0  0  0  0
+
+ 0  0  1  0
+ 1  0  0  0
+ 0  0  0  1
+ 0  1  0  0
+
+ */
 public class NQueenProblem {
     final int N = 4;
 
@@ -18,9 +32,9 @@ public class NQueenProblem {
        to check only left side for attacking queens */
     boolean isSafe(int board[][], int row, int col) {
         int i, j;
-        if (row == 2 && col == 1) {
+       /* if (row == 2 && col == 1) {
             System.out.println("debug");
-        }
+        }*/
 
         /* Check this row on left side */
         for (i = 0; i < col; i++)
@@ -56,8 +70,8 @@ public class NQueenProblem {
             if (isSafe(board, i, col)) {
                 /* Place this queen in board[i][col] */
                 board[i][col] = 1;
-                printSolution(board);
-                System.out.println("");
+//                printSolution(board);
+//                System.out.println("");
                 /* recur to place rest of the queens */
                 if (solveNQUtil(board, col + 1) == true)
                     return true;
@@ -66,8 +80,8 @@ public class NQueenProblem {
                    doesn't lead to a solution then
                    remove queen from board[i][col] */
                 board[i][col] = 0; // BACKTRACK
-                printSolution(board);
-                System.out.println("");
+//                printSolution(board);
+//                System.out.println("");
             }
         }
 
@@ -85,12 +99,15 @@ public class NQueenProblem {
        solutions, this function prints one of the
        feasible solutions.*/
     boolean solveNQ() {
-        int board[][] = {{0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0}
-        };
-
+        int board[][] =
+                {   {0, 0, 0, 0},
+                    {0, 0, 0, 0},
+                    {0, 0, 0, 0},
+                    {0, 0, 0, 0}
+                };
+        System.out.println(" Initail board ");
+        printSolution(board);
+        System.out.println();
         if (solveNQUtil(board, 0) == false) {
             System.out.print("Solution does not exist");
             return false;

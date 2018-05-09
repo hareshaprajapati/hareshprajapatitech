@@ -20,6 +20,11 @@ as there is an edge from 40 to 10 so value is 1 in adjancey_matrix for a[0][1]
 				6  {0,  0,  0,  0,  0,  0,  0  }, // Node 7: 70
 as there is an edge from 50 to 70 so value is 1 in adjancey_matrix for a[5][6]
 
+output
+
+The BFS traversal of the graph is
+40	10	20	30	60	50	70
+
  */
 
 import java.util.ArrayList;
@@ -83,7 +88,7 @@ public class BreadthFirstSearchExampleAdjacencyMatrix
 		{
  
 			Node element=queue.remove();
-			System.out.print(element.data + "t");
+			System.out.print(element.data + "\t");
 			ArrayList<Node> neighbours=findNeighbours(adjacency_matrix,element);
 			for (int i = 0; i < neighbours.size(); i++) {
 				Node n=neighbours.get(i);

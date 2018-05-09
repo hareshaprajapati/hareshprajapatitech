@@ -10,6 +10,8 @@ import java.util.LinkedList;
  Empty a Jug
  Fill a Jug
  Pour water from one jug to the other until one of the jugs is either empty or full.
+
+ Minimum number of steps required to major 4 litter using jug with litter 3 and jug with litter 5 is 6
  */
 public class TwoWaterJug {
 
@@ -18,7 +20,7 @@ public class TwoWaterJug {
     public static void main(String[] args) {
         int n = 3, m = 5, d = 4;
 
-        System.out.println("Minimum number of steps required is " + minSteps(m, n, d));
+        System.out.println("Minimum number of steps required to major " + d + " litter using jug with litter " + n + " and jug with litter " + m + " is " + minSteps(m, n, d));
 
     }
 

@@ -1,3 +1,11 @@
+/*
+Initial array
+2 3 6 6 8 9 10 10 10 12 12
+Intermediate solution
+2 3 6 8 9 10 12 10 10 12 12
+solved
+2 3 6 8 9 10 12
+ */
 public class RemoveDuplicateElements {
  
     public static int[] removeDuplicates(int[] input){
@@ -15,6 +23,10 @@ public class RemoveDuplicateElements {
                 input[++j] = input[i++];
             }    
         }
+        System.out.println("\nIntermediate solution ");
+        for(int l:input){
+            System.out.print(l+" ");
+        }
         int[] output = new int[j+1];
         for(int k=0; k<output.length; k++){
             output[k] = input[k];
@@ -25,7 +37,12 @@ public class RemoveDuplicateElements {
      
     public static void main(String a[]){
         int[] input1 = {2,3,6,6,8,9,10,10,10,12,12};
+        System.out.println("Initial array");
+        for(int i:input1){
+            System.out.print(i+" ");
+        }
         int[] output = removeDuplicates(input1);
+        System.out.println("\nsolved");
         for(int i:output){
             System.out.print(i+" ");
         }

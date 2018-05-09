@@ -1,5 +1,34 @@
 package The8puzzle;
 
+/*
+
+output
+Minimum number of moves = 5
+ 4  1  3
+ 0  2  5
+ 7  8  6
+
+ 0  1  3
+ 4  2  5
+ 7  8  6
+
+ 1  0  3
+ 4  2  5
+ 7  8  6
+
+ 1  2  3
+ 4  0  5
+ 7  8  6
+
+ 1  2  3
+ 4  5  0
+ 7  8  6
+
+ 1  2  3
+ 4  5  6
+ 7  8  0
+ */
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -42,9 +71,9 @@ public class Solver {
     }
 
     public Solver(Board initial){
-        Board initialBoard;
-        Queue<Board> neighbors = new LinkedList<>();
-        initialBoard = initial;
+//        Board initialBoard;
+//        Queue<Board> neighbors = new LinkedList<>();
+//        initialBoard = initial;
 
         Node currentNode = new Node(initial, null, 0);
 //        Node currentTwin = new Node(initial.twin(), null, 0);

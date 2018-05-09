@@ -1,5 +1,14 @@
+/*
+
+Tested on  Wed May 09 10:48:32 IST 2018
+Subtracting -15 days from Wed May 09 10:48:32 IST 2018
+24-4-2018
+Tue Apr 24 10:48:32 IST 2018
+
+ */
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,9 +36,10 @@ public class AddSubtractDate {
         amount = -15;
 //        amount = 21;
 
-        AddSubtractDate addSubtractDate = new AddSubtractDate(11, 8, 2017);
+        AddSubtractDate addSubtractDate = new AddSubtractDate(9, 5, 2018);
         AddSubtractDate addOrSubDays = addSubtractDate.addOrSubDays(amount);
-
+        System.out.println("Tested on  " + new Date());
+        System.out.println("Subtracting " + amount + " days from " + new Date());
         System.out.println(addOrSubDays.getDay() + "-" + addOrSubDays.getMonth() + "-" + addOrSubDays.getYear());
 
         // Testing

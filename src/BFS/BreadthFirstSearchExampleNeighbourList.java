@@ -8,6 +8,11 @@ package BFS;
 \/		\/	   \	>
 10		>30----->60/
 
+output
+
+The BFS traversal of the graph is
+40	10	20	30	60	50	70
+
  */
 import java.util.ArrayList;
 import java.util.LinkedList;
