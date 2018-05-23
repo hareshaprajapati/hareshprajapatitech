@@ -31,7 +31,7 @@ ATM
 - matrix manupulation, sorting in differrent ways  rem
 - queue, stack, link list implementation rem
 - primary key foreign key composite key expain with practical example rem
-- get past 6 months records from the data base make query ( mainly date conversation) rem
+- get past 6 months records from the data base make query ( mainly date conversation)
 - swap the number without using 3rd temp variable 
 -hotel management process design rem
 -library management process design rem
