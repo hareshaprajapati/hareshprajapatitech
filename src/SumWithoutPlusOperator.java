@@ -5,7 +5,7 @@ import java.io.*;
 
  */
 
-class AdditionWithoutPlusOperator {
+class SumWithoutPlusOperator {
     static int Add(int x, int y) {
 
 
@@ -16,7 +16,20 @@ class AdditionWithoutPlusOperator {
 
             int carry = x & y; // + operation
 //            int carry = ~x & y; // - operation
+
 // below 3 steps are alternative of &
+            //101
+            //110
+            //100 after and
+
+            //X      101
+            //Y      110
+            //or     111
+
+            //~x     010
+            //y      110
+            //xor    100
+            //or^xor 100 after below operations
 //            int or = x | y;
 //            int xor = ~x ^ y;
 //            int carry = or ^ xor;
@@ -37,6 +50,6 @@ class AdditionWithoutPlusOperator {
 
     // Driver code
     public static void main(String arg[]) {
-        System.out.println(Add(6, 4));
+        System.out.println(Add(4, 6));
     }
 }
