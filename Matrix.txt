@@ -1,4 +1,4 @@
-- rotate nxn matrix in spiral order
+- SprialPrint rotate nxn matrix in spiral order
 - expression valid ({[]})
 - count region of 1 
 int a[][] = {
