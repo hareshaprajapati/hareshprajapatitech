@@ -1,5 +1,3 @@
-package BFS;
-
 /*
 
 40--->20\-->50\
@@ -8,22 +6,21 @@ package BFS;
 \/</  |    \>   /
 10/-->30---->60/
 
-output
-
-The BFS traversal of the graph is
-40	10	20	30	60	50	70
+The DFS traversal of the graph using stack
+40 20 50 70 60 30 10
+The DFS traversal of the graph using recursion
+40 10 30 60 70 20 50
+Process finished with exit code 0
 
  */
+
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+import java.util.Stack;
  
-public class BreadthFirstSearchExampleNeighbourList
+public class DepthFirstSearchExampleNeighbourListStackAndRecursion
 { 
  
-	private Queue<Node> queue;
-	static ArrayList<Node> nodes=new ArrayList<Node>();
 	static class Node
 	{
 		int data;
@@ -48,31 +45,42 @@ public class BreadthFirstSearchExampleNeighbourList
 		}
 	}
  
-	public BreadthFirstSearchExampleNeighbourList()
+	// Recursive DFS
+	public  void dfs(Node node)
 	{
-		queue = new LinkedList<Node>();
+		System.out.print(node.data + " ");
+		List<Node> neighbours=node.getNeighbours();
+        node.visited=true;
+		for (int i = 0; i < neighbours.size(); i++) {
+			Node n=neighbours.get(i);
+			if(n!=null && !n.visited)
+			{
+				dfs(n);
+			}
+		}
 	}
  
-	public void bfs(Node node)
+	// Iterative DFS using stack
+	public  void dfsUsingStack(Node node)
 	{
-		queue.add(node);
+		Stack<Node> stack=new  Stack<Node>();
+		stack.add(node);
 		node.visited=true;
-		while (!queue.isEmpty())
+		while (!stack.isEmpty())
 		{
+			Node element=stack.pop();
+			System.out.print(element.data + " ");
  
-			Node element=queue.remove();
-			System.out.print(element.data + "\t");
 			List<Node> neighbours=element.getNeighbours();
 			for (int i = 0; i < neighbours.size(); i++) {
 				Node n=neighbours.get(i);
 				if(n!=null && !n.visited)
 				{
-					queue.add(n);
+					stack.add(n);
 					n.visited=true;
  
 				}
 			}
- 
 		}
 	}
  
@@ -97,9 +105,25 @@ public class BreadthFirstSearchExampleNeighbourList
 		node30.addneighbours(node60);
 		node60.addneighbours(node70);
 		node50.addneighbours(node70);
-		System.out.println("The BFS traversal of the graph is ");
-		BreadthFirstSearchExampleNeighbourList bfsExample = new BreadthFirstSearchExampleNeighbourList();
-		bfsExample.bfs(node40);
  
+		DepthFirstSearchExampleNeighbourListStackAndRecursion dfsExample = new DepthFirstSearchExampleNeighbourListStackAndRecursion();
+ 
+		System.out.println("The DFS traversal of the graph using stack ");
+		dfsExample.dfsUsingStack(node40);
+ 
+		System.out.println();
+ 
+		// Resetting the visited flag for nodes
+		node40.visited=false;
+		node10.visited=false;
+		node20.visited=false;
+		node30.visited=false;
+		node60.visited=false;
+		node50.visited=false;
+		node70.visited=false;
+ 
+ 
+		System.out.println("The DFS traversal of the graph using recursion ");
+		dfsExample.dfs(node40);
 	}
 }
