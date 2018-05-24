@@ -13,17 +13,16 @@ public class GenericQueueUsingStack<T> {
         ge.add(1);
         ge.add(2);
         ge.add(3);
-        System.out.println(ge.remove());
-        System.out.println(ge.remove());
-        System.out.println(ge.remove());
-        System.out.println(ge.remove());
+        System.out.println("removing " + ge.remove());
+        System.out.println("removing " + ge.remove());
+        System.out.println("removing " + ge.remove());
 
     }
 
     private T remove() throws Exception {
         T t = null;
         Stack<T> tempStack = new Stack<>();
-        while(this.stack.size() != 0){
+        while(!this.stack.empty()){
             tempStack.push(this.stack.pop());
         }
         if(!tempStack.empty()) {
@@ -33,7 +32,7 @@ public class GenericQueueUsingStack<T> {
             System.out.println("queue is empty");
             throw new Exception("No such element");
         }
-        while (tempStack.size() != 0 ){
+        while (!tempStack.empty()){
             this.stack.push(tempStack.pop());
         }
         return t;
