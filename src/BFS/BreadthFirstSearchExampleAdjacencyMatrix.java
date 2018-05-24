@@ -2,11 +2,11 @@ package BFS;
 
 /*
 
-40		>20\----->50\
-			 \		>
-			  \		  70
-\/		\/	   \	>
-10		>30----->60/
+40--->20\-->50\
+|    /|  \     \
+|   / |   \      > 70
+\/</  |    \>   /
+10/-->30---->60/
 
 as there is an edge from 40 to 10 so value is 1 in adjancey_matrix for a[0][1]
 

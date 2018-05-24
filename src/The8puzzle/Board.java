@@ -24,15 +24,21 @@ public class Board {
     private int hamming;
     private int manhattan;
 
-    public Board(int[][] blocks){
+    public Board(int[][] blocks) throws Exception {
         size = blocks.length;
         tiles =new int[size][size];
+        int noOfZeros = 0;
         for(int i = 0; i <size; i++){
             for(int j = 0; j<size; j++){
                 this.tiles[i][j] = blocks[i][j];
-                if(tiles[i][j] == 0)
-                    setZero(i,j);
+                if(tiles[i][j] == 0) {
+                    setZero(i, j);
+                    noOfZeros++;
+                }
             }
+        }
+        if(noOfZeros>1){
+            throw new Exception("No of Zeros is more than 1 , invalid board");
         }
     }
 
@@ -127,7 +133,7 @@ public class Board {
         return copy;
     }
 
-    public Board twin() {
+    public Board twin() throws Exception {
         int[][] twin = deepCopy(tiles);
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -152,7 +158,7 @@ public class Board {
         return Arrays.deepEquals(this.tiles, that.tiles );
     }
 
-    public Iterable<Board> neighbors(){
+    public Iterable<Board> neighbors() throws Exception {
         Stack<Board> boards = new Stack<Board>();
 //        Queue<Board> boards = new LinkedList<>();
 

@@ -70,7 +70,7 @@ public class Solver {
         }*/
     }
 
-    public Solver(Board initial){
+    public Solver(Board initial) throws Exception {
 //        Board initialBoard;
 //        Queue<Board> neighbors = new LinkedList<>();
 //        initialBoard = initial;
@@ -124,7 +124,7 @@ public class Solver {
         return goalNode.moves;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // create initial board from file
         int[][] blocks = {
                /* {1 ,2 ,3},

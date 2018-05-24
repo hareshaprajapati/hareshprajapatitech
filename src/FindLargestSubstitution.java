@@ -1,7 +1,7 @@
 public class FindLargestSubstitution {
 
     public static void main(String[] args) {
-        String str = "abcdbcbcbcbbcabcbccccccccccccccccccccccccccccc";
+        String str = "abcdbcbcbcbbcabcbcccccb";
         System.out.println(findLongestSubstitution(str));
     }
 
@@ -18,15 +18,18 @@ public class FindLargestSubstitution {
                     currentMax = sb.toString();
                     sb.delete(0,sb.length());
                 }
-            }else if(i+1 < length){
+            }/*else if(i+1 < length){
                 if(ch[i] == ch[i+1] || sb.toString().contains(Character.toString(ch[i]))){
                     sb.append(ch[i]);
                 }
-            }else{
+            }*/else{
                 if(sb.toString().contains(Character.toString(ch[i]))){
                     sb.append(ch[i]);
                 }
             }
+        }
+        if(currentMax.length() == sb.toString().length()){
+            return currentMax + "  " + sb.toString();
         }
         if(currentMax.length() > sb.toString().length()){
             return currentMax;
