@@ -2,7 +2,7 @@ public class FindLargestSubstitution {
 
     public static void main(String[] args) {
 //        String str = "wwqqqqqwaaaacaac";
-        String str = "wwqqqsssssss";
+        String str = "wwqlqqsssssss";
         System.out.println(findLongestSubstitution(str));
     }
 
@@ -40,8 +40,8 @@ public class FindLargestSubstitution {
             }else if(ch1 != ch[i] && ch2 != ch[i]){
                 ch1 = ch2;
                 ch2 = ch[i];
-                String substring = sb.substring(sb.length() - ch2Count);
                 ch2Count = 1;
+                String substring = sb.substring(sb.length() - ch2Count);
                 if(currentMax.length() < sb.length()){
                     currentMax = sb.toString();
                 }
@@ -49,7 +49,6 @@ public class FindLargestSubstitution {
                 sb.append(substring);
                 sb.append(ch2);
             }
-
         }
         if(currentMax.length() == sb.toString().length()){
             return currentMax + "  " + sb.toString();
