@@ -17,7 +17,7 @@ output : 3 , count region of 1
 -The 8-puzzle  
 - solve sudoku
 snake rem
-ATM
+demo.ATM
 - program add/ subtract date without using java api
 - 8 queens problem
 - print heiarchy of ur organization from ceo to your position
@@ -36,10 +36,10 @@ ATM
 -hotel management process design rem
 -library management process design rem
 -jdbc
--BFS
+-demo.BFS
 -Longest SubString
 - removeDuplicates from array
--StackSort
+-demo.StackSort
 
 
 1. Sum of digit without using  +, - and & operator.
@@ -70,7 +70,7 @@ package practice;
 /**
  * Created by EZDI\haresh.p on 14/8/17.
  */
-public class CountRegionOf1 {
+public class demo.CountRegionOf1 {
 
     public static void main(String[] args) {
         int a[][] = {
@@ -161,7 +161,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class Main {
+public class demo.Main {
 
 	public static void main(String[] args) {
 		/*System.out.println("==== Missionaries and practice.Cannibals Problem ====");
@@ -447,7 +447,7 @@ import java.util.LinkedList;
 /**
  * Created by EZDI\haresh.p on 9/8/17.
  */
-public class TwoWaterJug {
+public class demo.TwoWaterJug {
 
     private LinkedList<Integer> adj[];
 
@@ -772,22 +772,22 @@ public class Solver {
     // you will want to use comparator for hamming & man
     //MinPq<node> pq as the priority queue
 
-    private Node goalNode;
-    private Queue<Node> pq = new LinkedList<>();
-    private Queue<Node> pqTwin = new LinkedList<Node>();
+    private demo.Node goalNode;
+    private Queue<demo.Node> pq = new LinkedList<>();
+    private Queue<demo.Node> pqTwin = new LinkedList<demo.Node>();
 
-    public class Node implements Comparable<Node>{
+    public class demo.Node implements Comparable<demo.Node>{
         public Board board;
-        public Node previous;
+        public demo.Node previous;
         public int moves;
 
-        public int compareTo(Node that){
+        public int compareTo(demo.Node that){
             //StdOut.println("i:" + this.priority() + " j:" + that.priority() + " "+ ((this.priority() > that.priority()) ? 1 :  -1));
             if(this.priority() == that.priority()) return 0;
             return (this.priority() > that.priority()) ? 1 :  -1;
         }
 
-        public Node(Board b, Node prev, int m){
+        public demo.Node(Board b, demo.Node prev, int m){
             board = b;
             previous = prev;
             moves = m;
@@ -803,8 +803,8 @@ public class Solver {
         Queue<Board> neighbors = new LinkedList<>();
         initialBoard = initial;
 
-        Node currentNode = new Node(initial, null, 0);
-        Node currentTwin = new Node(initial.twin(), null, 0);
+        demo.Node currentNode = new demo.Node(initial, null, 0);
+        demo.Node currentTwin = new demo.Node(initial.twin(), null, 0);
         pq.add(currentNode);
         pqTwin.add(currentTwin);
 
@@ -815,12 +815,12 @@ public class Solver {
 
             for(Board b : currentNode.board.neighbors()) {
                 if(!b.equals(currentNode.board))
-                    pq.add(new Node(b, currentNode, currentNode.moves +1));
+                    pq.add(new demo.Node(b, currentNode, currentNode.moves +1));
             }
 
             for(Board b : currentTwin.board.neighbors()) {
                 if(!b.equals(currentNode.board))
-                    pqTwin.add(new Node(b, currentTwin, currentTwin.moves +1));
+                    pqTwin.add(new demo.Node(b, currentTwin, currentTwin.moves +1));
             }
         }
 
@@ -882,7 +882,7 @@ public class Solver {
 ****************************************************************************************************************************************
 - solve sudoku
 
-public class Sudoku {
+public class demo.Sudoku {
 
 	// dimension of input
 	static int N = 9;
@@ -1054,7 +1054,7 @@ public class Sudoku {
 snake
 
 
-package practice.snack;
+package practice.demo.snack;
 
 import javax.swing.*;
 import java.awt.*;
@@ -1311,7 +1311,7 @@ public class Board extends JPanel implements ActionListener {
 
 
 
-package practice.snack;
+package practice.demo.snack;
 
 public class Food {
 
@@ -1347,7 +1347,7 @@ public class Food {
     }
 }
 
-package practice.snack;
+package practice.demo.snack;
 
 public class Snake {
 
@@ -1451,7 +1451,7 @@ public class Snake {
     }
 }
 
-package practice.snack;
+package practice.demo.snack;
 
 import javax.swing.*;
 import java.awt.*;
@@ -1481,7 +1481,7 @@ public class Game extends JFrame {
     }
 }
 ****************************************************************************************************************************************
-ATM
+demo.ATM
 
 package atm;
 
@@ -1562,7 +1562,7 @@ public class CalculateMoneyAtm {
 		tenrupees = 0;
 		totalAmount = 0;
 		Integer amountInt = 0;
-		System.out.println("Currency Avaialbe in ATM");
+		System.out.println("Currency Avaialbe in demo.ATM");
 		for (String key : atmStatus.getAvaialableMoney().keySet()) {
 			System.out.println(atmStatus.getAvaialableMoney().get(key) + ":"
 					+ key + " Notes");
@@ -1581,7 +1581,7 @@ public class CalculateMoneyAtm {
 		}
 		totalAmount = ((initialtwothousandrupees * 2000)
 				+ (initialhundressrupees * 100) + (initialfiftyrupees * 50) + (initialtenrupees * 10));
-		System.out.println("Total Available amount in ATM : " + totalAmount);
+		System.out.println("Total Available amount in demo.ATM : " + totalAmount);
 
 		Scanner input = new Scanner(System.in);
 		System.out.print("Enter Money > ");
@@ -1604,7 +1604,7 @@ public class CalculateMoneyAtm {
 			totalAmount = ((initialtwothousandrupees * 2000)
 					+ (initialhundressrupees * 100) + (initialfiftyrupees * 50) + (initialtenrupees * 10));
 			System.out
-					.println("Total Available amount in ATM : " + totalAmount);
+					.println("Total Available amount in demo.ATM : " + totalAmount);
 			if (totalAmount < amountInt) {
 				System.out
 						.println("Total Avaialble amount is less in atm, Sorry for Inconvience");
@@ -1668,7 +1668,7 @@ public class CalculateMoneyAtm {
 
 package practice;
 
-public class NQueenProblem {
+public class demo.NQueenProblem {
     final int N = 4;
 
     /* A utility function to print solution */
@@ -1772,7 +1772,7 @@ public class NQueenProblem {
 
     // driver program to test above function
     public static void main(String args[]) {
-        NQueenProblem Queen = new NQueenProblem();
+        demo.NQueenProblem Queen = new demo.NQueenProblem();
         Queen.solveNQ();
     }
 }
@@ -1801,7 +1801,7 @@ take it and compare. it will be done in 2 iteration.
 
 import java.io.*;
  
-public class SpiralPrint 
+public class demo.SpiralPrint
 {
     // Function print matrix in spiral form
     static void spiralPrint(int matrix[][])
@@ -1873,55 +1873,55 @@ linked list
  
 import java.util.Scanner;
  
-/*  Class Node  */
-class Node
+/*  Class demo.Node  */
+class demo.Node
 {
     protected int data;
-    protected Node link;
+    protected demo.Node link;
  
     /*  Constructor  */
-    public Node()
+    public demo.Node()
     {
         link = null;
         data = 0;
     }    
     /*  Constructor  */
-    public Node(int d,Node n)
+    public demo.Node(int d,demo.Node n)
     {
         data = d;
         link = n;
     }    
-    /*  Function to set link to next Node  */
-    public void setLink(Node n)
+    /*  Function to set link to next demo.Node  */
+    public void setLink(demo.Node n)
     {
         link = n;
     }    
-    /*  Function to set data to current Node  */
+    /*  Function to set data to current demo.Node  */
     public void setData(int d)
     {
         data = d;
     }    
     /*  Function to get link to next node  */
-    public Node getLink()
+    public demo.Node getLink()
     {
         return link;
     }    
-    /*  Function to get data from current Node  */
+    /*  Function to get data from current demo.Node  */
     public int getData()
     {
         return data;
     }
 }
  
-/* Class linkedList */
-class linkedList
+/* Class demo.linkedList */
+class demo.linkedList
 {
-    protected Node start;
-    protected Node end ;
+    protected demo.Node start;
+    protected demo.Node end ;
     public int size ;
  
     /*  Constructor  */
-    public linkedList()
+    public demo.linkedList()
     {
         start = null;
         end = null;
@@ -1940,7 +1940,7 @@ class linkedList
     /*  Function to insert an element at begining  */
     public void insertAtStart(int val)
     {
-        Node nptr = new Node(val, null);    
+        demo.Node nptr = new demo.Node(val, null);
         size++ ;    
         if(start == null) 
         {
@@ -1956,7 +1956,7 @@ class linkedList
     /*  Function to insert an element at end  */
     public void insertAtEnd(int val)
     {
-        Node nptr = new Node(val,null);    
+        demo.Node nptr = new demo.Node(val,null);
         size++ ;    
         if(start == null) 
         {
@@ -1972,14 +1972,14 @@ class linkedList
     /*  Function to insert an element at position  */
     public void insertAtPos(int val , int pos)
     {
-        Node nptr = new Node(val, null);                
-        Node ptr = start;
+        demo.Node nptr = new demo.Node(val, null);
+        demo.Node ptr = start;
         pos = pos - 1 ;
         for (int i = 1; i < size; i++) 
         {
             if (i == pos) 
             {
-                Node tmp = ptr.getLink() ;
+                demo.Node tmp = ptr.getLink() ;
                 ptr.setLink(nptr);
                 nptr.setLink(tmp);
                 break;
@@ -1999,8 +1999,8 @@ class linkedList
         }
         if (pos == size) 
         {
-            Node s = start;
-            Node t = start;
+            demo.Node s = start;
+            demo.Node t = start;
             while (s != end)
             {
                 t = s;
@@ -2011,13 +2011,13 @@ class linkedList
             size --;
             return;
         }
-        Node ptr = start;
+        demo.Node ptr = start;
         pos = pos - 1 ;
         for (int i = 1; i < size - 1; i++) 
         {
             if (i == pos) 
             {
-                Node tmp = ptr.getLink();
+                demo.Node tmp = ptr.getLink();
                 tmp = tmp.getLink();
                 ptr.setLink(tmp);
                 break;
@@ -2040,7 +2040,7 @@ class linkedList
             System.out.println(start.getData() );
             return;
         }
-        Node ptr = start;
+        demo.Node ptr = start;
         System.out.print(start.getData()+ "->");
         ptr = start.getLink();
         while (ptr.getLink() != null)
@@ -2052,14 +2052,14 @@ class linkedList
     }
 }
  
-/*  Class SinglyLinkedList  */
-public class SinglyLinkedList
+/*  Class demo.SinglyLinkedList  */
+public class demo.SinglyLinkedList
 {    
     public static void main(String[] args)
     {             
         Scanner scan = new Scanner(System.in);
-        /* Creating object of class linkedList */
-        linkedList list = new linkedList(); 
+        /* Creating object of class demo.linkedList */
+        demo.linkedList list = new demo.linkedList();
         System.out.println("Singly Linked List Test\n");          
         char ch;
         /*  Perform list operations  */
@@ -2139,10 +2139,10 @@ int a=2,b=3;
 -library management process design
 
 ****************************************************************************************************************************************
--BFS
+-demo.BFS
 
-package practice;// Java program to print BFS traversal from a given source vertex.
-// BFS(int s) traverses vertices reachable from s.
+package practice;// Java program to print demo.BFS traversal from a given source vertex.
+// demo.BFS(int s) traverses vertices reachable from s.
 import java.util.Iterator;
 import java.util.LinkedList;
  
@@ -2168,14 +2168,14 @@ class Graph
         adj[v].add(w);
     }
  
-    // prints BFS traversal from a given source s
-    void BFS(int s)
+    // prints demo.BFS traversal from a given source s
+    void demo.BFS(int s)
     {
         // Mark all the vertices as not visited(By default
         // set as false)
         boolean visited[] = new boolean[V];
  
-        // Create a queue for BFS
+        // Create a queue for demo.BFS
         LinkedList<Integer> queue = new LinkedList<Integer>();
  
         // Mark the current node as visited and enqueue it
@@ -2222,7 +2222,7 @@ class Graph
         System.out.println("Following is Breadth First Traversal "+
                            "(starting from vertex 2)");
  
-        g.BFS(2);
+        g.demo.BFS(2);
     }
 }
 ****************************************************************************************************************************************
@@ -2233,7 +2233,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
  
-public class StatementInsertExample {
+public class demo.StatementInsertExample {
     public static void main(String... arg) {
            Connection con = null;
            Statement stmt = null;
@@ -2279,7 +2279,7 @@ Longest SubString
 import java.util.HashSet;
 import java.util.Set;
 
-public class LongestSubString {
+public class demo.LongestSubString {
 	private Set<String> subStrList = new HashSet<String>();
 	private int finalSubStrSize = 0;
 
@@ -2328,7 +2328,7 @@ public class LongestSubString {
 	}
 
 	public static void main(String a[]) {
-		LongestSubString mls = new LongestSubString();
+		demo.LongestSubString mls = new demo.LongestSubString();
 		System.out.println(mls.getLongestSubstr("java2novice"));
 		 System.out.println(mls.getLongestSubstr("java_language_is_sweet"));
 		 System.out.println(mls.getLongestSubstr("java_java_java_java"));
@@ -2338,7 +2338,7 @@ public class LongestSubString {
 ****************************************************************************************************************************************
 removeDuplicates from array
 
-public class RemoveDuplicateElements {
+public class demo.RemoveDuplicateElements {
  
     public static int[] removeDuplicates(int[] input){
          
@@ -2373,11 +2373,11 @@ public class RemoveDuplicateElements {
 }
  
  ***************************************************************************************************************************************************
- StackSort
+ demo.StackSort
  
  import java.util.Stack;
 
-public class StackSort {
+public class demo.StackSort {
 
 	public static Stack<Integer> sortStack(Stack<Integer> input) {
 
@@ -2427,7 +2427,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddSubtractDate
+public class demo.AddSubtractDate
 {
     private static final Map<Integer, Integer>  daysInMonth;
 
@@ -2453,14 +2453,14 @@ public class AddSubtractDate
     private int                                 year;
     private int                                 amount;
 
-    public AddSubtractDate(int day, int month, int year)
+    public demo.AddSubtractDate(int day, int month, int year)
     {
         this.day = day;
         this.month = month;
         this.year = year;
     }
 
-    public AddSubtractDate addOrSubDays(int amount)
+    public demo.AddSubtractDate addOrSubDays(int amount)
     {
         this.amount = amount;
         return addOrSubDays(this.day + this.amount, this.month, this.year);
@@ -2472,8 +2472,8 @@ public class AddSubtractDate
         amount = -15;
 //        amount = 21;
 
-        AddSubtractDate addSubtractDate = new AddSubtractDate(11, 8, 2017);
-        AddSubtractDate addOrSubDays = addSubtractDate.addOrSubDays(amount);
+        demo.AddSubtractDate addSubtractDate = new demo.AddSubtractDate(11, 8, 2017);
+        demo.AddSubtractDate addOrSubDays = addSubtractDate.addOrSubDays(amount);
 
         System.out.println(addOrSubDays.getDay() + "-" + addOrSubDays.getMonth() + "-" + addOrSubDays.getYear());
 
@@ -2483,10 +2483,10 @@ public class AddSubtractDate
         System.out.println(cal.getTime());
     }
 
-    private AddSubtractDate addOrSubDays(int days, int month, int year)
+    private demo.AddSubtractDate addOrSubDays(int days, int month, int year)
     {
             if (days > 0 && days <= getNoOfDaysInMonth(month, year)) {
-                return new AddSubtractDate(days, month, year);
+                return new demo.AddSubtractDate(days, month, year);
             } else if (days <= 0) {
                 month = month - 1;
                 if (month == 0) {
@@ -2556,7 +2556,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NoOfDaysBetweenTwoDates {
+public class demo.NoOfDaysBetweenTwoDates {
     private static final Map<Integer, Integer> daysInMonth;
 
     static {
@@ -2580,19 +2580,19 @@ public class NoOfDaysBetweenTwoDates {
     private int year;
     private int amount;
 
-    public NoOfDaysBetweenTwoDates(int day, int month, int year) {
+    public demo.NoOfDaysBetweenTwoDates(int day, int month, int year) {
         this.day = day;
         this.month = month;
         this.year = year;
     }
 
-    public NoOfDaysBetweenTwoDates addOrSubDays(int amount) {
+    public demo.NoOfDaysBetweenTwoDates addOrSubDays(int amount) {
         this.amount = amount;
         return addOrSubDays(this.day + this.amount, this.month, this.year);
     }
 
 
-    public static int countLeapYears(NoOfDaysBetweenTwoDates d) {
+    public static int countLeapYears(demo.NoOfDaysBetweenTwoDates d) {
         int years = d.year;
 
         // Check if the current year needs to be considered
@@ -2605,7 +2605,7 @@ public class NoOfDaysBetweenTwoDates {
         return years / 4 - years / 100 + years / 400;
     }
 
-    public static long getDifference(NoOfDaysBetweenTwoDates dt1, NoOfDaysBetweenTwoDates dt2) {
+    public static long getDifference(demo.NoOfDaysBetweenTwoDates dt1, demo.NoOfDaysBetweenTwoDates dt2) {
         // COUNT TOTAL NUMBER OF DAYS BEFORE FIRST DATE 'dt1'
 
         // initialize count using years and day
@@ -2635,8 +2635,8 @@ public class NoOfDaysBetweenTwoDates {
         amount = -15;
 //        amount = 21;
 
-        NoOfDaysBetweenTwoDates addSubtractDate = new NoOfDaysBetweenTwoDates(11, 8, 2017);
-        NoOfDaysBetweenTwoDates myDate1 = new NoOfDaysBetweenTwoDates(13, 8, 2017);
+        demo.NoOfDaysBetweenTwoDates addSubtractDate = new demo.NoOfDaysBetweenTwoDates(11, 8, 2017);
+        demo.NoOfDaysBetweenTwoDates myDate1 = new demo.NoOfDaysBetweenTwoDates(13, 8, 2017);
 
         System.out.println(getDifference(addSubtractDate, myDate1));
         // Testing
@@ -2648,9 +2648,9 @@ public class NoOfDaysBetweenTwoDates {
         System.out.println(diff / (24 * 60 * 60 * 1000));
     }
 
-    private NoOfDaysBetweenTwoDates addOrSubDays(int days, int month, int year) {
+    private demo.NoOfDaysBetweenTwoDates addOrSubDays(int days, int month, int year) {
         if (days > 0 && days <= getNoOfDaysInMonth(month, year)) {
-            return new NoOfDaysBetweenTwoDates(days, month, year);
+            return new demo.NoOfDaysBetweenTwoDates(days, month, year);
         } else if (days <= 0) {
             month = month - 1;
             if (month == 0) {
@@ -2703,9 +2703,9 @@ public class NoOfDaysBetweenTwoDates {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof NoOfDaysBetweenTwoDates)) return false;
+        if (!(o instanceof demo.NoOfDaysBetweenTwoDates)) return false;
 
-        NoOfDaysBetweenTwoDates that = (NoOfDaysBetweenTwoDates) o;
+        demo.NoOfDaysBetweenTwoDates that = (demo.NoOfDaysBetweenTwoDates) o;
 
         if (day != that.day) return false;
         if (month != that.month) return false;
